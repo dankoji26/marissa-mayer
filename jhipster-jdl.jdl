@@ -1,0 +1,126 @@
+
+entity Utilisateur {
+	nom String,
+    prenom String,
+    email String,
+    password String,
+    createdAt Instant,
+    role Role
+}
+
+entity Reservation {
+	statuts ReservationStatuts,
+    date Instant,
+    utilisateur Utilisateur,
+    createdAt Instant
+}
+
+entity Categorie {
+	nom String,
+    createdAt Instant
+}
+
+entity Cours {
+    nom String,
+    description String,
+    categorie Categorie,
+    duree Instant,
+    prerequis String,
+    catalogue Catalogue,
+    createdAt Instant
+}
+
+entity Paiement {
+	reservation Reservation,
+    montant BigDecimal,
+    createdAt Instant
+}
+
+entity Catalogue {
+    nom String,
+    utilisateur Utilisateur,
+    createdAt Instant
+}
+
+entity Notification {
+    message String,
+    statuts NotificationStatus,
+    createdAt Instant,
+    utilisateur Utilisateur
+}
+
+entity Evaluation {
+    commentaire String,
+    createdAt Instant,
+    utilisateur Utilisateur,
+    cours Cours
+}
+
+entity Creneau {
+	jour Jour,
+    heureDebut String,
+    heureFin String,
+    cours Cours,
+    utilisateur Utilisateur,
+    statuts CreneauStatuts
+}
+
+enum ReservationStatuts {
+    REJETEE, EN_ATTENTE, CONFIRMEE
+}
+
+enum NotificationStatus {
+	LUE, NON_LUE
+}
+
+enum Role {
+	PRESTATAIRE, ETUDIANT
+}
+
+enum Jour {
+	LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE
+}
+
+enum CreneauStatuts {
+	LIBRE, OCCUPEE
+}
+
+relationship OneToOne {
+	Catalogue{utilisateur} to Utilisateur
+}
+
+relationship OneToMany {
+	Catalogue to Cours{catalogue}
+}
+
+relationship OneToOne {
+	Paiement{reservation} to Reservation
+}
+
+relationship OneToMany {
+	Utilisateur to Reservation{utilisateur}
+}
+
+relationship OneToMany {
+	Cours to Evaluation{cours}
+}
+
+relationship OneToOne {
+	Utilisateur to Evaluation{utilisateur}
+}
+
+relationship OneToMany {
+	Utilisateur to Notification{utilisateur}
+}
+
+relationship OneToMany {
+	Cours to Creneau{cours}
+}
+
+relationship OneToMany {
+	Utilisateur to Creneau{utilisateur}
+}
+
+relationship OneToMany {
+	Utilisateur to Creneau{utilisateur}
+}
