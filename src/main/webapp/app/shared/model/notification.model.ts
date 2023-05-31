@@ -7,7 +7,7 @@ export interface INotification {
   message?: string;
   statuts?: NotificationStatus;
   createdAt?: string;
-  utilisateur?: IUtilisateur | null;
+  utilisateur?: IUtilisateur;
 }
 
 export const defaultValue: Readonly<INotification> = {};

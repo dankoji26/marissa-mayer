@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.esisalama.marissamayer.IntegrationTest;
 import com.esisalama.marissamayer.domain.Paiement;
+import com.esisalama.marissamayer.domain.Reservation;
 import com.esisalama.marissamayer.repository.PaiementRepository;
 import com.esisalama.marissamayer.service.dto.PaiementDTO;
 import com.esisalama.marissamayer.service.mapper.PaiementMapper;
@@ -69,6 +70,16 @@ class PaiementResourceIT {
      */
     public static Paiement createEntity(EntityManager em) {
         Paiement paiement = new Paiement().montant(DEFAULT_MONTANT).createdAt(DEFAULT_CREATED_AT);
+        // Add required entity
+        Reservation reservation;
+        if (TestUtil.findAll(em, Reservation.class).isEmpty()) {
+            reservation = ReservationResourceIT.createEntity(em);
+            em.persist(reservation);
+            em.flush();
+        } else {
+            reservation = TestUtil.findAll(em, Reservation.class).get(0);
+        }
+        paiement.setReservation(reservation);
         return paiement;
     }
 
@@ -80,6 +91,16 @@ class PaiementResourceIT {
      */
     public static Paiement createUpdatedEntity(EntityManager em) {
         Paiement paiement = new Paiement().montant(UPDATED_MONTANT).createdAt(UPDATED_CREATED_AT);
+        // Add required entity
+        Reservation reservation;
+        if (TestUtil.findAll(em, Reservation.class).isEmpty()) {
+            reservation = ReservationResourceIT.createUpdatedEntity(em);
+            em.persist(reservation);
+            em.flush();
+        } else {
+            reservation = TestUtil.findAll(em, Reservation.class).get(0);
+        }
+        paiement.setReservation(reservation);
         return paiement;
     }
 

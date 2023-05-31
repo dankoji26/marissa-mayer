@@ -1,11 +1,11 @@
-id;message;statuts;created_at
-1;Rustic Throughway;LUE;2023-05-30T12:05:35
-2;Metal USB CSS;LUE;2023-05-30T13:25:19
-3;copying viral Executive;NON_LUE;2023-05-30T13:23:47
-4;Tuna bluetooth Yen;LUE;2023-05-31T07:01:32
-5;calculate partnerships Virtual;NON_LUE;2023-05-30T08:17:53
-6;solutions;LUE;2023-05-31T05:39:01
-7;Interface;NON_LUE;2023-05-30T21:48:11
-8;generation Fresh payment;LUE;2023-05-30T20:03:56
-9;parallelism deposit Berkshire;NON_LUE;2023-05-31T00:58:55
-10;schemas;NON_LUE;2023-05-30T08:23:38
+id;message;statuts;created_at;utilisateur_id
+1;Rustic Throughway;LUE;2023-05-30T12:05:35;1
+2;Metal USB CSS;LUE;2023-05-30T13:25:19;2
+3;copying viral Executive;NON_LUE;2023-05-30T13:23:47;3
+4;Tuna bluetooth Yen;LUE;2023-05-31T07:01:32;4
+5;calculate partnerships Virtual;NON_LUE;2023-05-30T08:17:53;5
+6;solutions;LUE;2023-05-31T05:39:01;6
+7;Interface;NON_LUE;2023-05-30T21:48:11;7
+8;generation Fresh payment;LUE;2023-05-30T20:03:56;8
+9;parallelism deposit Berkshire;NON_LUE;2023-05-31T00:58:55;9
+10;schemas;NON_LUE;2023-05-30T08:23:38;10

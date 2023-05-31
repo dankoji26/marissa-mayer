@@ -55,7 +55,8 @@ public class Cours implements Serializable {
     @JsonIgnoreProperties(value = { "cours", "utilisateur" }, allowSetters = true)
     private Set<Creneau> creneaus = new HashSet<>();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "utilisateur", "cours" }, allowSetters = true)
     private Catalogue catalogue;
 

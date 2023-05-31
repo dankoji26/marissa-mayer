@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.esisalama.marissamayer.IntegrationTest;
+import com.esisalama.marissamayer.domain.Catalogue;
 import com.esisalama.marissamayer.domain.Cours;
 import com.esisalama.marissamayer.repository.CoursRepository;
 import com.esisalama.marissamayer.service.dto.CoursDTO;
@@ -81,6 +82,16 @@ class CoursResourceIT {
             .duree(DEFAULT_DUREE)
             .prerequis(DEFAULT_PREREQUIS)
             .createdAt(DEFAULT_CREATED_AT);
+        // Add required entity
+        Catalogue catalogue;
+        if (TestUtil.findAll(em, Catalogue.class).isEmpty()) {
+            catalogue = CatalogueResourceIT.createEntity(em);
+            em.persist(catalogue);
+            em.flush();
+        } else {
+            catalogue = TestUtil.findAll(em, Catalogue.class).get(0);
+        }
+        cours.setCatalogue(catalogue);
         return cours;
     }
 
@@ -97,6 +108,16 @@ class CoursResourceIT {
             .duree(UPDATED_DUREE)
             .prerequis(UPDATED_PREREQUIS)
             .createdAt(UPDATED_CREATED_AT);
+        // Add required entity
+        Catalogue catalogue;
+        if (TestUtil.findAll(em, Catalogue.class).isEmpty()) {
+            catalogue = CatalogueResourceIT.createUpdatedEntity(em);
+            em.persist(catalogue);
+            em.flush();
+        } else {
+            catalogue = TestUtil.findAll(em, Catalogue.class).get(0);
+        }
+        cours.setCatalogue(catalogue);
         return cours;
     }
 

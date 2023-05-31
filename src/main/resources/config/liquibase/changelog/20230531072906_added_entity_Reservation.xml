@@ -24,7 +24,7 @@
                 <constraints nullable="false" />
             </column>
             <column name="utilisateur_id" type="bigint">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
@@ -52,6 +52,7 @@
             <column name="statuts" type="string"/>
             <column name="date" type="date"/>
             <column name="created_at" type="date"/>
+            <column name="utilisateur_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

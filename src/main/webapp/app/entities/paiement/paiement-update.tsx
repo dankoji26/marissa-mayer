@@ -127,6 +127,7 @@ export const PaiementUpdate = () => {
                 data-cy="reservation"
                 label={translate('marissamayerApp.paiement.reservation')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {reservations
@@ -137,6 +138,9 @@ export const PaiementUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/paiement" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

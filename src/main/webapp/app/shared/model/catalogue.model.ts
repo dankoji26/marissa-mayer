@@ -6,7 +6,7 @@ export interface ICatalogue {
   id?: number;
   nom?: string;
   createdAt?: string;
-  utilisateur?: IUtilisateur | null;
+  utilisateur?: IUtilisateur;
   cours?: ICours[] | null;
 }
 

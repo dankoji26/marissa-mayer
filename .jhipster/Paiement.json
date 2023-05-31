@@ -26,7 +26,8 @@
       "otherEntityName": "reservation",
       "ownerSide": true,
       "relationshipName": "reservation",
-      "relationshipType": "one-to-one"
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceClass"

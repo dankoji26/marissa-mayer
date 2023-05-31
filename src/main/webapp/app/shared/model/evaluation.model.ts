@@ -6,8 +6,8 @@ export interface IEvaluation {
   id?: number;
   commentaire?: string;
   createdAt?: string;
-  cours?: ICours | null;
-  utilisateur?: IUtilisateur | null;
+  cours?: ICours;
+  utilisateur?: IUtilisateur;
 }
 
 export const defaultValue: Readonly<IEvaluation> = {};

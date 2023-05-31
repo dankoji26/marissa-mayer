@@ -146,6 +146,7 @@ export const ReservationUpdate = () => {
                 data-cy="utilisateur"
                 label={translate('marissamayerApp.reservation.utilisateur')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {utilisateurs
@@ -156,6 +157,9 @@ export const ReservationUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/reservation" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

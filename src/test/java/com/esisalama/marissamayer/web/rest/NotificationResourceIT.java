@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.esisalama.marissamayer.IntegrationTest;
 import com.esisalama.marissamayer.domain.Notification;
+import com.esisalama.marissamayer.domain.Utilisateur;
 import com.esisalama.marissamayer.domain.enumeration.NotificationStatus;
 import com.esisalama.marissamayer.repository.NotificationRepository;
 import com.esisalama.marissamayer.service.dto.NotificationDTO;
@@ -71,6 +72,16 @@ class NotificationResourceIT {
      */
     public static Notification createEntity(EntityManager em) {
         Notification notification = new Notification().message(DEFAULT_MESSAGE).statuts(DEFAULT_STATUTS).createdAt(DEFAULT_CREATED_AT);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        notification.setUtilisateur(utilisateur);
         return notification;
     }
 
@@ -82,6 +93,16 @@ class NotificationResourceIT {
      */
     public static Notification createUpdatedEntity(EntityManager em) {
         Notification notification = new Notification().message(UPDATED_MESSAGE).statuts(UPDATED_STATUTS).createdAt(UPDATED_CREATED_AT);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createUpdatedEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        notification.setUtilisateur(utilisateur);
         return notification;
     }
 

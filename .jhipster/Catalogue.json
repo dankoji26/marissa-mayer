@@ -26,7 +26,8 @@
       "otherEntityName": "utilisateur",
       "ownerSide": true,
       "relationshipName": "utilisateur",
-      "relationshipType": "one-to-one"
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
     },
     {
       "otherEntityName": "cours",

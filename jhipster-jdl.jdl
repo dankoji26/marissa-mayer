@@ -87,41 +87,41 @@ enum CreneauStatuts {
 }
 
 relationship OneToOne {
-	Catalogue{utilisateur} to Utilisateur
+	Catalogue{utilisateur required} to Utilisateur
 }
 
 relationship OneToMany {
-	Catalogue to Cours{catalogue}
+	Catalogue to Cours{catalogue required}
 }
 
 relationship OneToOne {
-	Paiement{reservation} to Reservation
+	Paiement{reservation required} to Reservation
 }
 
 relationship OneToMany {
-	Utilisateur to Reservation{utilisateur}
+	Utilisateur to Reservation{utilisateur required}
 }
 
 relationship OneToMany {
-	Cours to Evaluation{cours}
+	Cours to Evaluation{cours required}
 }
 
 relationship OneToMany {
-	Utilisateur to Evaluation{utilisateur}
+	Utilisateur to Evaluation{utilisateur required}
 }
 
 relationship OneToMany {
-	Utilisateur to Notification{utilisateur}
+	Utilisateur to Notification{utilisateur required}
 }
 
 relationship OneToMany {
-	Cours to Creneau{cours}
+	Cours to Creneau{cours required}
 }
 
 relationship OneToMany {
-	Utilisateur to Creneau{utilisateur}
+	Utilisateur to Creneau{utilisateur required}
 }
 
 relationship OneToMany {
-	Utilisateur to Creneau{utilisateur}
+	Utilisateur to Creneau{utilisateur required}
 }

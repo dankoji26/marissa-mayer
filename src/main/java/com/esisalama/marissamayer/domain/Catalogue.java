@@ -36,7 +36,8 @@ public class Catalogue implements Serializable {
     private Instant createdAt;
 
     @JsonIgnoreProperties(value = { "reservations", "evaluations", "notifications", "creneaus" }, allowSetters = true)
-    @OneToOne
+    @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(unique = true)
     private Utilisateur utilisateur;
 

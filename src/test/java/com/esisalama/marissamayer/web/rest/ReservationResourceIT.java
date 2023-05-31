@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.esisalama.marissamayer.IntegrationTest;
 import com.esisalama.marissamayer.domain.Reservation;
+import com.esisalama.marissamayer.domain.Utilisateur;
 import com.esisalama.marissamayer.domain.enumeration.ReservationStatuts;
 import com.esisalama.marissamayer.repository.ReservationRepository;
 import com.esisalama.marissamayer.service.dto.ReservationDTO;
@@ -71,6 +72,16 @@ class ReservationResourceIT {
      */
     public static Reservation createEntity(EntityManager em) {
         Reservation reservation = new Reservation().statuts(DEFAULT_STATUTS).date(DEFAULT_DATE).createdAt(DEFAULT_CREATED_AT);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        reservation.setUtilisateur(utilisateur);
         return reservation;
     }
 
@@ -82,6 +93,16 @@ class ReservationResourceIT {
      */
     public static Reservation createUpdatedEntity(EntityManager em) {
         Reservation reservation = new Reservation().statuts(UPDATED_STATUTS).date(UPDATED_DATE).createdAt(UPDATED_CREATED_AT);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createUpdatedEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        reservation.setUtilisateur(utilisateur);
         return reservation;
     }
 

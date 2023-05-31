@@ -9,8 +9,8 @@ export interface ICreneau {
   heureDebut?: string | null;
   heureFin?: string | null;
   statuts?: CreneauStatuts;
-  cours?: ICours | null;
-  utilisateur?: IUtilisateur | null;
+  cours?: ICours;
+  utilisateur?: IUtilisateur;
 }
 
 export const defaultValue: Readonly<ICreneau> = {};

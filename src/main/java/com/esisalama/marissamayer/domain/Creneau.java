@@ -43,11 +43,13 @@ public class Creneau implements Serializable {
     @Column(name = "statuts", nullable = false)
     private CreneauStatuts statuts;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "evaluations", "creneaus", "catalogue" }, allowSetters = true)
     private Cours cours;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "reservations", "evaluations", "notifications", "creneaus" }, allowSetters = true)
     private Utilisateur utilisateur;
 

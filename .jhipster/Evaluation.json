@@ -26,13 +26,15 @@
       "otherEntityName": "cours",
       "otherEntityRelationshipName": "evaluation",
       "relationshipName": "cours",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     },
     {
       "otherEntityName": "utilisateur",
       "otherEntityRelationshipName": "evaluation",
       "relationshipName": "utilisateur",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceClass"

@@ -7,7 +7,7 @@ export interface IReservation {
   statuts?: ReservationStatuts;
   date?: string;
   createdAt?: string;
-  utilisateur?: IUtilisateur | null;
+  utilisateur?: IUtilisateur;
 }
 
 export const defaultValue: Readonly<IReservation> = {};

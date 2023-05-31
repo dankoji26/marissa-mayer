@@ -12,7 +12,7 @@ export interface ICours {
   createdAt?: string;
   evaluations?: IEvaluation[] | null;
   creneaus?: ICreneau[] | null;
-  catalogue?: ICatalogue | null;
+  catalogue?: ICatalogue;
 }
 
 export const defaultValue: Readonly<ICours> = {};

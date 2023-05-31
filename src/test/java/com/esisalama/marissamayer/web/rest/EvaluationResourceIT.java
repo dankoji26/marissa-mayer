@@ -6,7 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.esisalama.marissamayer.IntegrationTest;
+import com.esisalama.marissamayer.domain.Cours;
 import com.esisalama.marissamayer.domain.Evaluation;
+import com.esisalama.marissamayer.domain.Utilisateur;
 import com.esisalama.marissamayer.repository.EvaluationRepository;
 import com.esisalama.marissamayer.service.dto.EvaluationDTO;
 import com.esisalama.marissamayer.service.mapper.EvaluationMapper;
@@ -67,6 +69,26 @@ class EvaluationResourceIT {
      */
     public static Evaluation createEntity(EntityManager em) {
         Evaluation evaluation = new Evaluation().commentaire(DEFAULT_COMMENTAIRE).createdAt(DEFAULT_CREATED_AT);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        evaluation.setCours(cours);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        evaluation.setUtilisateur(utilisateur);
         return evaluation;
     }
 
@@ -78,6 +100,26 @@ class EvaluationResourceIT {
      */
     public static Evaluation createUpdatedEntity(EntityManager em) {
         Evaluation evaluation = new Evaluation().commentaire(UPDATED_COMMENTAIRE).createdAt(UPDATED_CREATED_AT);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createUpdatedEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        evaluation.setCours(cours);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createUpdatedEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        evaluation.setUtilisateur(utilisateur);
         return evaluation;
     }
 

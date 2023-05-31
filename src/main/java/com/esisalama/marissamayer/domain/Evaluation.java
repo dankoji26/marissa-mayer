@@ -33,11 +33,13 @@ public class Evaluation implements Serializable {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "evaluations", "creneaus", "catalogue" }, allowSetters = true)
     private Cours cours;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
+    @NotNull
     @JsonIgnoreProperties(value = { "reservations", "evaluations", "notifications", "creneaus" }, allowSetters = true)
     private Utilisateur utilisateur;
 

@@ -35,7 +35,8 @@ public class Paiement implements Serializable {
     private Instant createdAt;
 
     @JsonIgnoreProperties(value = { "utilisateur" }, allowSetters = true)
-    @OneToOne
+    @OneToOne(optional = false)
+    @NotNull
     @JoinColumn(unique = true)
     private Reservation reservation;
 

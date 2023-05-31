@@ -158,6 +158,7 @@ export const CreneauUpdate = () => {
                 data-cy="cours"
                 label={translate('marissamayerApp.creneau.cours')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {cours
@@ -168,12 +169,16 @@ export const CreneauUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <ValidatedField
                 id="creneau-utilisateur"
                 name="utilisateur"
                 data-cy="utilisateur"
                 label={translate('marissamayerApp.creneau.utilisateur')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {utilisateurs
@@ -184,6 +189,9 @@ export const CreneauUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/creneau" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

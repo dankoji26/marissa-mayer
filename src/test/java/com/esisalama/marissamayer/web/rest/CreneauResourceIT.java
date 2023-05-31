@@ -6,7 +6,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.esisalama.marissamayer.IntegrationTest;
+import com.esisalama.marissamayer.domain.Cours;
 import com.esisalama.marissamayer.domain.Creneau;
+import com.esisalama.marissamayer.domain.Utilisateur;
 import com.esisalama.marissamayer.domain.enumeration.CreneauStatuts;
 import com.esisalama.marissamayer.domain.enumeration.Jour;
 import com.esisalama.marissamayer.repository.CreneauRepository;
@@ -77,6 +79,26 @@ class CreneauResourceIT {
             .heureDebut(DEFAULT_HEURE_DEBUT)
             .heureFin(DEFAULT_HEURE_FIN)
             .statuts(DEFAULT_STATUTS);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        creneau.setCours(cours);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        creneau.setUtilisateur(utilisateur);
         return creneau;
     }
 
@@ -92,6 +114,26 @@ class CreneauResourceIT {
             .heureDebut(UPDATED_HEURE_DEBUT)
             .heureFin(UPDATED_HEURE_FIN)
             .statuts(UPDATED_STATUTS);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createUpdatedEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        creneau.setCours(cours);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createUpdatedEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        creneau.setUtilisateur(utilisateur);
         return creneau;
     }
 

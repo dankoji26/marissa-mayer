@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.esisalama.marissamayer.IntegrationTest;
 import com.esisalama.marissamayer.domain.Catalogue;
+import com.esisalama.marissamayer.domain.Utilisateur;
 import com.esisalama.marissamayer.repository.CatalogueRepository;
 import com.esisalama.marissamayer.service.dto.CatalogueDTO;
 import com.esisalama.marissamayer.service.mapper.CatalogueMapper;
@@ -67,6 +68,16 @@ class CatalogueResourceIT {
      */
     public static Catalogue createEntity(EntityManager em) {
         Catalogue catalogue = new Catalogue().nom(DEFAULT_NOM).createdAt(DEFAULT_CREATED_AT);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        catalogue.setUtilisateur(utilisateur);
         return catalogue;
     }
 
@@ -78,6 +89,16 @@ class CatalogueResourceIT {
      */
     public static Catalogue createUpdatedEntity(EntityManager em) {
         Catalogue catalogue = new Catalogue().nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        // Add required entity
+        Utilisateur utilisateur;
+        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
+            utilisateur = UtilisateurResourceIT.createUpdatedEntity(em);
+            em.persist(utilisateur);
+            em.flush();
+        } else {
+            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
+        }
+        catalogue.setUtilisateur(utilisateur);
         return catalogue;
     }
 

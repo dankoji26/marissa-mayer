@@ -132,6 +132,7 @@ export const EvaluationUpdate = () => {
                 data-cy="cours"
                 label={translate('marissamayerApp.evaluation.cours')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {cours
@@ -142,12 +143,16 @@ export const EvaluationUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <ValidatedField
                 id="evaluation-utilisateur"
                 name="utilisateur"
                 data-cy="utilisateur"
                 label={translate('marissamayerApp.evaluation.utilisateur')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {utilisateurs
@@ -158,6 +163,9 @@ export const EvaluationUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/evaluation" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

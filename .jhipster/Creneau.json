@@ -39,13 +39,15 @@
       "otherEntityName": "cours",
       "otherEntityRelationshipName": "creneau",
       "relationshipName": "cours",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     },
     {
       "otherEntityName": "utilisateur",
       "otherEntityRelationshipName": "creneau",
       "relationshipName": "utilisateur",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceClass"

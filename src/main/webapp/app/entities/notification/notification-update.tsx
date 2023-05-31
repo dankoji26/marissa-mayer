@@ -142,6 +142,7 @@ export const NotificationUpdate = () => {
                 data-cy="utilisateur"
                 label={translate('marissamayerApp.notification.utilisateur')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {utilisateurs
@@ -152,6 +153,9 @@ export const NotificationUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/notification" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

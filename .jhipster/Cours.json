@@ -51,7 +51,8 @@
       "otherEntityName": "catalogue",
       "otherEntityRelationshipName": "cours",
       "relationshipName": "catalogue",
-      "relationshipType": "many-to-one"
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
     }
   ],
   "service": "serviceClass"

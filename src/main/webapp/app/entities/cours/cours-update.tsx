@@ -144,6 +144,7 @@ export const CoursUpdate = () => {
                 data-cy="catalogue"
                 label={translate('marissamayerApp.cours.catalogue')}
                 type="select"
+                required
               >
                 <option value="" key="0" />
                 {catalogues
@@ -154,6 +155,9 @@ export const CoursUpdate = () => {
                     ))
                   : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/cours" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

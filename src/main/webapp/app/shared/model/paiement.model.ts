@@ -5,7 +5,7 @@ export interface IPaiement {
   id?: number;
   montant?: number;
   createdAt?: string;
-  reservation?: IReservation | null;
+  reservation?: IReservation;
 }
 
 export const defaultValue: Readonly<IPaiement> = {};
