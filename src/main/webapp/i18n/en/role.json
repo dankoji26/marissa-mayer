@@ -1,0 +1,9 @@
+{
+  "marissamayerApp": {
+    "Role": {
+      "null": "",
+      "PRESTATAIRE": "PRESTATAIRE",
+      "ETUDIANT": "ETUDIANT"
+    }
+  }
+}

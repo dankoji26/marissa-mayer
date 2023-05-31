@@ -1,0 +1,36 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531072906",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "reservation",
+  "fields": [
+    {
+      "fieldName": "statuts",
+      "fieldType": "ReservationStatuts",
+      "fieldValues": "REJETEE,EN_ATTENTE,CONFIRMEE"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Reservation",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "utilisateur",
+      "otherEntityRelationshipName": "reservation",
+      "relationshipName": "utilisateur",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

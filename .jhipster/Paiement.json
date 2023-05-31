@@ -1,0 +1,31 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531073206",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "paiement",
+  "fields": [
+    {
+      "fieldName": "montant",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Paiement",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "reservation",
+      "ownerSide": true,
+      "relationshipName": "reservation",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

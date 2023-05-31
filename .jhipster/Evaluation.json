@@ -1,0 +1,37 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531073506",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "evaluation",
+  "fields": [
+    {
+      "fieldName": "commentaire",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Evaluation",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "cours",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "utilisateur",
+      "otherEntityRelationshipName": "evaluation",
+      "relationshipName": "utilisateur",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

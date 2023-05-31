@@ -1,0 +1,10 @@
+{
+  "marissamayerApp": {
+    "ReservationStatuts": {
+      "null": "",
+      "REJETEE": "REJETEE",
+      "EN_ATTENTE": "EN_ATTENTE",
+      "CONFIRMEE": "CONFIRMEE"
+    }
+  }
+}

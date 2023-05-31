@@ -1,0 +1,55 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531073106",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "cours",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "duree",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "prerequis",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Cours",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "evaluation",
+      "otherEntityRelationshipName": "cours",
+      "relationshipName": "evaluation",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "creneau",
+      "otherEntityRelationshipName": "cours",
+      "relationshipName": "creneau",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "catalogue",
+      "otherEntityRelationshipName": "cours",
+      "relationshipName": "catalogue",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

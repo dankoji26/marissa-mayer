@@ -1,0 +1,37 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531073306",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "catalogue",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Catalogue",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "utilisateur",
+      "ownerSide": true,
+      "relationshipName": "utilisateur",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "catalogue",
+      "relationshipName": "cours",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

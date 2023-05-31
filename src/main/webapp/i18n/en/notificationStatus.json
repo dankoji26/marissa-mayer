@@ -1,0 +1,9 @@
+{
+  "marissamayerApp": {
+    "NotificationStatus": {
+      "null": "",
+      "LUE": "LUE",
+      "NON_LUE": "NON_LUE"
+    }
+  }
+}

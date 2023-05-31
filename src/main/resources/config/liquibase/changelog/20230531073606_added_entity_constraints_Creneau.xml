@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+    <!--
+        Added the constraints for entity Creneau.
+    -->
+    <changeSet id="20230531073606-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="cours_id"
+                                 baseTableName="creneau"
+                                 constraintName="fk_creneau__cours_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cours"/>
+
+        <addForeignKeyConstraint baseColumnNames="utilisateur_id"
+                                 baseTableName="creneau"
+                                 constraintName="fk_creneau__utilisateur_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="utilisateur"/>
+    </changeSet>
+</databaseChangeLog>

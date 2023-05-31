@@ -1,0 +1,27 @@
+{
+  "marissamayerApp": {
+    "catalogue": {
+      "home": {
+        "title": "Catalogues",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Catalogue",
+        "createOrEditLabel": "Create or edit a Catalogue",
+        "notFound": "No Catalogues found"
+      },
+      "created": "A new Catalogue is created with identifier {{ param }}",
+      "updated": "A Catalogue is updated with identifier {{ param }}",
+      "deleted": "A Catalogue is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Catalogue {{ id }}?"
+      },
+      "detail": {
+        "title": "Catalogue"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "createdAt": "Created At",
+      "utilisateur": "Utilisateur",
+      "cours": "Cours"
+    }
+  }
+}

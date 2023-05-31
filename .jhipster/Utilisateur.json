@@ -1,0 +1,66 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531072806",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "utilisateur",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "prenom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "email",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "password",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "role",
+      "fieldType": "Role",
+      "fieldValues": "PRESTATAIRE,ETUDIANT"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Utilisateur",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "reservation",
+      "otherEntityRelationshipName": "utilisateur",
+      "relationshipName": "reservation",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "evaluation",
+      "otherEntityRelationshipName": "utilisateur",
+      "relationshipName": "evaluation",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "notification",
+      "otherEntityRelationshipName": "utilisateur",
+      "relationshipName": "notification",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "creneau",
+      "otherEntityRelationshipName": "utilisateur",
+      "relationshipName": "creneau",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "serviceClass"
+}

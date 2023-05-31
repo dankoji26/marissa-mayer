@@ -1,0 +1,27 @@
+{
+  "marissamayerApp": {
+    "evaluation": {
+      "home": {
+        "title": "Evaluations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Evaluation",
+        "createOrEditLabel": "Create or edit a Evaluation",
+        "notFound": "No Evaluations found"
+      },
+      "created": "A new Evaluation is created with identifier {{ param }}",
+      "updated": "A Evaluation is updated with identifier {{ param }}",
+      "deleted": "A Evaluation is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Evaluation {{ id }}?"
+      },
+      "detail": {
+        "title": "Evaluation"
+      },
+      "id": "ID",
+      "commentaire": "Commentaire",
+      "createdAt": "Created At",
+      "cours": "Cours",
+      "utilisateur": "Utilisateur"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "marissamayerApp": {
+    "cours": {
+      "home": {
+        "title": "Cours",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Cours",
+        "createOrEditLabel": "Create or edit a Cours",
+        "notFound": "No Cours found"
+      },
+      "created": "A new Cours is created with identifier {{ param }}",
+      "updated": "A Cours is updated with identifier {{ param }}",
+      "deleted": "A Cours is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Cours {{ id }}?"
+      },
+      "detail": {
+        "title": "Cours"
+      },
+      "id": "ID",
+      "nom": "Nom",
+      "description": "Description",
+      "duree": "Duree",
+      "prerequis": "Prerequis",
+      "createdAt": "Created At",
+      "evaluation": "Evaluation",
+      "creneau": "Creneau",
+      "catalogue": "Catalogue"
+    }
+  }
+}

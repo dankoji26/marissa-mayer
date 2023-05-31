@@ -1,0 +1,36 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531073406",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "notification",
+  "fields": [
+    {
+      "fieldName": "message",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statuts",
+      "fieldType": "NotificationStatus",
+      "fieldValues": "LUE,NON_LUE"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Notification",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "utilisateur",
+      "otherEntityRelationshipName": "notification",
+      "relationshipName": "utilisateur",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

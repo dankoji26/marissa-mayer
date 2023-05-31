@@ -1,4 +1,15 @@
-
+application {
+  config {
+    baseName marissamayer
+    applicationType monolith
+    authenticationType jwt
+    clientFramework react
+    packageName com.esisalama.marissamayer
+    serverPort 9999
+  }
+  entities *
+  dto * with mapstruct
+}
 entity Utilisateur {
 	nom String,
     prenom String,
@@ -11,7 +22,6 @@ entity Utilisateur {
 entity Reservation {
 	statuts ReservationStatuts,
     date Instant,
-    utilisateur Utilisateur,
     createdAt Instant
 }
 
@@ -23,22 +33,18 @@ entity Categorie {
 entity Cours {
     nom String,
     description String,
-    categorie Categorie,
     duree Instant,
     prerequis String,
-    catalogue Catalogue,
     createdAt Instant
 }
 
 entity Paiement {
-	reservation Reservation,
     montant BigDecimal,
     createdAt Instant
 }
 
 entity Catalogue {
     nom String,
-    utilisateur Utilisateur,
     createdAt Instant
 }
 
@@ -46,23 +52,18 @@ entity Notification {
     message String,
     statuts NotificationStatus,
     createdAt Instant,
-    utilisateur Utilisateur
 }
 
 entity Evaluation {
     commentaire String,
     createdAt Instant,
-    utilisateur Utilisateur,
-    cours Cours
 }
 
 entity Creneau {
 	jour Jour,
     heureDebut String,
     heureFin String,
-    cours Cours,
-    utilisateur Utilisateur,
-    statuts CreneauStatuts
+  	statuts CreneauStatuts
 }
 
 enum ReservationStatuts {
@@ -105,7 +106,7 @@ relationship OneToMany {
 	Cours to Evaluation{cours}
 }
 
-relationship OneToOne {
+relationship OneToMany {
 	Utilisateur to Evaluation{utilisateur}
 }
 

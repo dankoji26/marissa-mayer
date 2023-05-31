@@ -1,0 +1,47 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531073606",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "creneau",
+  "fields": [
+    {
+      "fieldName": "jour",
+      "fieldType": "Jour",
+      "fieldValues": "LUNDI,MARDI,MERCREDI,JEUDI,VENDREDI,SAMEDI,DIMANCHE"
+    },
+    {
+      "fieldName": "heureDebut",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "heureFin",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statuts",
+      "fieldType": "CreneauStatuts",
+      "fieldValues": "LIBRE,OCCUPEE"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Creneau",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "creneau",
+      "relationshipName": "cours",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "utilisateur",
+      "otherEntityRelationshipName": "creneau",
+      "relationshipName": "utilisateur",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

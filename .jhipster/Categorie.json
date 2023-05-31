@@ -1,0 +1,24 @@
+{
+  "applications": ["marissamayer"],
+  "changelogDate": "20230531073006",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "categorie",
+  "fields": [
+    {
+      "fieldName": "nom",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdAt",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Categorie",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}
