@@ -4,9 +4,9 @@ import { ReservationStatuts } from 'app/shared/model/enumerations/reservation-st
 
 export interface IReservation {
   id?: number;
-  statuts?: ReservationStatuts | null;
-  date?: string | null;
-  createdAt?: string | null;
+  statuts?: ReservationStatuts;
+  date?: string;
+  createdAt?: string;
   utilisateur?: IUtilisateur | null;
 }
 

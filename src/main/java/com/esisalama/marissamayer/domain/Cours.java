@@ -6,6 +6,7 @@ import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,19 +27,22 @@ public class Cours implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nom")
+    @NotNull
+    @Column(name = "nom", nullable = false)
     private String nom;
 
-    @Column(name = "description")
+    @NotNull
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "duree")
-    private Instant duree;
+    private String duree;
 
     @Column(name = "prerequis")
     private String prerequis;
 
-    @Column(name = "created_at")
+    @NotNull
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @OneToMany(mappedBy = "cours")
@@ -96,16 +100,16 @@ public class Cours implements Serializable {
         this.description = description;
     }
 
-    public Instant getDuree() {
+    public String getDuree() {
         return this.duree;
     }
 
-    public Cours duree(Instant duree) {
+    public Cours duree(String duree) {
         this.setDuree(duree);
         return this;
     }
 
-    public void setDuree(Instant duree) {
+    public void setDuree(String duree) {
         this.duree = duree;
     }
 

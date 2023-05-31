@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,14 +26,17 @@ public class Notification implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "message")
+    @NotNull
+    @Column(name = "message", nullable = false)
     private String message;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "statuts")
+    @Column(name = "statuts", nullable = false)
     private NotificationStatus statuts;
 
-    @Column(name = "created_at")
+    @NotNull
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @ManyToOne

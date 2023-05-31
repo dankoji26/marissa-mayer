@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class ReservationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/reservations")
-    public ResponseEntity<ReservationDTO> createReservation(@RequestBody ReservationDTO reservationDTO) throws URISyntaxException {
+    public ResponseEntity<ReservationDTO> createReservation(@Valid @RequestBody ReservationDTO reservationDTO) throws URISyntaxException {
         log.debug("REST request to save Reservation : {}", reservationDTO);
         if (reservationDTO.getId() != null) {
             throw new BadRequestAlertException("A new reservation cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class ReservationResource {
     @PutMapping("/reservations/{id}")
     public ResponseEntity<ReservationDTO> updateReservation(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ReservationDTO reservationDTO
+        @Valid @RequestBody ReservationDTO reservationDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Reservation : {}, {}", id, reservationDTO);
         if (reservationDTO.getId() == null) {
@@ -108,7 +110,7 @@ public class ReservationResource {
     @PatchMapping(value = "/reservations/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ReservationDTO> partialUpdateReservation(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody ReservationDTO reservationDTO
+        @NotNull @RequestBody ReservationDTO reservationDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Reservation partially : {}, {}", id, reservationDTO);
         if (reservationDTO.getId() == null) {

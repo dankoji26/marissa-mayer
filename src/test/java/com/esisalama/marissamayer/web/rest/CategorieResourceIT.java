@@ -125,6 +125,42 @@ class CategorieResourceIT {
 
     @Test
     @Transactional
+    void checkNomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = categorieRepository.findAll().size();
+        // set the field null
+        categorie.setNom(null);
+
+        // Create the Categorie, which fails.
+        CategorieDTO categorieDTO = categorieMapper.toDto(categorie);
+
+        restCategorieMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(categorieDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Categorie> categorieList = categorieRepository.findAll();
+        assertThat(categorieList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = categorieRepository.findAll().size();
+        // set the field null
+        categorie.setCreatedAt(null);
+
+        // Create the Categorie, which fails.
+        CategorieDTO categorieDTO = categorieMapper.toDto(categorie);
+
+        restCategorieMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(categorieDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Categorie> categorieList = categorieRepository.findAll();
+        assertThat(categorieList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllCategories() throws Exception {
         // Initialize the database
         categorieRepository.saveAndFlush(categorie);

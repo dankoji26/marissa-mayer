@@ -125,6 +125,9 @@ export const ReservationUpdate = () => {
                 data-cy="date"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.reservation.createdAt')}
@@ -133,6 +136,9 @@ export const ReservationUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 id="reservation-utilisateur"

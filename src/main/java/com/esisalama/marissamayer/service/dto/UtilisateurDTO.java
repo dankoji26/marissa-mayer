@@ -4,6 +4,7 @@ import com.esisalama.marissamayer.domain.enumeration.Role;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.esisalama.marissamayer.domain.Utilisateur} entity.
@@ -13,16 +14,22 @@ public class UtilisateurDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String nom;
 
+    @NotNull
     private String prenom;
 
+    @NotNull
     private String email;
 
+    @NotNull
     private String password;
 
+    @NotNull
     private Instant createdAt;
 
+    @NotNull
     private Role role;
 
     public Long getId() {

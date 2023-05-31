@@ -7,15 +7,17 @@
   "fields": [
     {
       "fieldName": "nom",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "description",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "duree",
-      "fieldType": "Instant"
+      "fieldType": "String"
     },
     {
       "fieldName": "prerequis",
@@ -23,7 +25,8 @@
     },
     {
       "fieldName": "createdAt",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

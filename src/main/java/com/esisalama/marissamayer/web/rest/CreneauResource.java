@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class CreneauResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/creneaus")
-    public ResponseEntity<CreneauDTO> createCreneau(@RequestBody CreneauDTO creneauDTO) throws URISyntaxException {
+    public ResponseEntity<CreneauDTO> createCreneau(@Valid @RequestBody CreneauDTO creneauDTO) throws URISyntaxException {
         log.debug("REST request to save Creneau : {}", creneauDTO);
         if (creneauDTO.getId() != null) {
             throw new BadRequestAlertException("A new creneau cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class CreneauResource {
     @PutMapping("/creneaus/{id}")
     public ResponseEntity<CreneauDTO> updateCreneau(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CreneauDTO creneauDTO
+        @Valid @RequestBody CreneauDTO creneauDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Creneau : {}, {}", id, creneauDTO);
         if (creneauDTO.getId() == null) {
@@ -108,7 +110,7 @@ public class CreneauResource {
     @PatchMapping(value = "/creneaus/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<CreneauDTO> partialUpdateCreneau(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CreneauDTO creneauDTO
+        @NotNull @RequestBody CreneauDTO creneauDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Creneau partially : {}, {}", id, creneauDTO);
         if (creneauDTO.getId() == null) {

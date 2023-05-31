@@ -3,6 +3,7 @@ package com.esisalama.marissamayer.service.dto;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.esisalama.marissamayer.domain.Categorie} entity.
@@ -12,8 +13,10 @@ public class CategorieDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String nom;
 
+    @NotNull
     private Instant createdAt;
 
     public Long getId() {

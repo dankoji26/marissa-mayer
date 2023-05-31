@@ -4,8 +4,8 @@ import { ICours } from 'app/shared/model/cours.model';
 
 export interface ICatalogue {
   id?: number;
-  nom?: string | null;
-  createdAt?: string | null;
+  nom?: string;
+  createdAt?: string;
   utilisateur?: IUtilisateur | null;
   cours?: ICours[] | null;
 }

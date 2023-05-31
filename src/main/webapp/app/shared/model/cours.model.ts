@@ -5,11 +5,11 @@ import { ICatalogue } from 'app/shared/model/catalogue.model';
 
 export interface ICours {
   id?: number;
-  nom?: string | null;
-  description?: string | null;
+  nom?: string;
+  description?: string;
   duree?: string | null;
   prerequis?: string | null;
-  createdAt?: string | null;
+  createdAt?: string;
   evaluations?: IEvaluation[] | null;
   creneaus?: ICreneau[] | null;
   catalogue?: ICatalogue | null;

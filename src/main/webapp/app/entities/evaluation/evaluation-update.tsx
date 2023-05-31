@@ -111,6 +111,9 @@ export const EvaluationUpdate = () => {
                 name="commentaire"
                 data-cy="commentaire"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.evaluation.createdAt')}
@@ -119,6 +122,9 @@ export const EvaluationUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 id="evaluation-cours"

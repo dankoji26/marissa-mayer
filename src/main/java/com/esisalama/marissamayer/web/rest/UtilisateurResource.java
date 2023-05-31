@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class UtilisateurResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/utilisateurs")
-    public ResponseEntity<UtilisateurDTO> createUtilisateur(@RequestBody UtilisateurDTO utilisateurDTO) throws URISyntaxException {
+    public ResponseEntity<UtilisateurDTO> createUtilisateur(@Valid @RequestBody UtilisateurDTO utilisateurDTO) throws URISyntaxException {
         log.debug("REST request to save Utilisateur : {}", utilisateurDTO);
         if (utilisateurDTO.getId() != null) {
             throw new BadRequestAlertException("A new utilisateur cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class UtilisateurResource {
     @PutMapping("/utilisateurs/{id}")
     public ResponseEntity<UtilisateurDTO> updateUtilisateur(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody UtilisateurDTO utilisateurDTO
+        @Valid @RequestBody UtilisateurDTO utilisateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Utilisateur : {}, {}", id, utilisateurDTO);
         if (utilisateurDTO.getId() == null) {
@@ -108,7 +110,7 @@ public class UtilisateurResource {
     @PatchMapping(value = "/utilisateurs/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<UtilisateurDTO> partialUpdateUtilisateur(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody UtilisateurDTO utilisateurDTO
+        @NotNull @RequestBody UtilisateurDTO utilisateurDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Utilisateur partially : {}, {}", id, utilisateurDTO);
         if (utilisateurDTO.getId() == null) {

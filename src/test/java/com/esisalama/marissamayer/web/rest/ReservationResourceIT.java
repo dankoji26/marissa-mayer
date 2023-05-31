@@ -134,6 +134,66 @@ class ReservationResourceIT {
 
     @Test
     @Transactional
+    void checkStatutsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = reservationRepository.findAll().size();
+        // set the field null
+        reservation.setStatuts(null);
+
+        // Create the Reservation, which fails.
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
+        restReservationMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Reservation> reservationList = reservationRepository.findAll();
+        assertThat(reservationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDateIsRequired() throws Exception {
+        int databaseSizeBeforeTest = reservationRepository.findAll().size();
+        // set the field null
+        reservation.setDate(null);
+
+        // Create the Reservation, which fails.
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
+        restReservationMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Reservation> reservationList = reservationRepository.findAll();
+        assertThat(reservationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = reservationRepository.findAll().size();
+        // set the field null
+        reservation.setCreatedAt(null);
+
+        // Create the Reservation, which fails.
+        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
+
+        restReservationMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Reservation> reservationList = reservationRepository.findAll();
+        assertThat(reservationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllReservations() throws Exception {
         // Initialize the database
         reservationRepository.saveAndFlush(reservation);

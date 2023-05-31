@@ -99,7 +99,16 @@ export const CatalogueUpdate = () => {
                   validate={{ required: true }}
                 />
               ) : null}
-              <ValidatedField label={translate('marissamayerApp.catalogue.nom')} id="catalogue-nom" name="nom" data-cy="nom" type="text" />
+              <ValidatedField
+                label={translate('marissamayerApp.catalogue.nom')}
+                id="catalogue-nom"
+                name="nom"
+                data-cy="nom"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
               <ValidatedField
                 label={translate('marissamayerApp.catalogue.createdAt')}
                 id="catalogue-createdAt"
@@ -107,6 +116,9 @@ export const CatalogueUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 id="catalogue-utilisateur"

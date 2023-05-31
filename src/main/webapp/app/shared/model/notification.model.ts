@@ -4,9 +4,9 @@ import { NotificationStatus } from 'app/shared/model/enumerations/notification-s
 
 export interface INotification {
   id?: number;
-  message?: string | null;
-  statuts?: NotificationStatus | null;
-  createdAt?: string | null;
+  message?: string;
+  statuts?: NotificationStatus;
+  createdAt?: string;
   utilisateur?: IUtilisateur | null;
 }
 

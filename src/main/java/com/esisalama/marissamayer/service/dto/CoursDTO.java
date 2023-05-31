@@ -3,6 +3,7 @@ package com.esisalama.marissamayer.service.dto;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.esisalama.marissamayer.domain.Cours} entity.
@@ -12,14 +13,17 @@ public class CoursDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String nom;
 
+    @NotNull
     private String description;
 
-    private Instant duree;
+    private String duree;
 
     private String prerequis;
 
+    @NotNull
     private Instant createdAt;
 
     private CatalogueDTO catalogue;
@@ -48,11 +52,11 @@ public class CoursDTO implements Serializable {
         this.description = description;
     }
 
-    public Instant getDuree() {
+    public String getDuree() {
         return duree;
     }
 
-    public void setDuree(Instant duree) {
+    public void setDuree(String duree) {
         this.duree = duree;
     }
 

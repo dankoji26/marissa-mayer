@@ -105,6 +105,10 @@ export const PaiementUpdate = () => {
                 name="montant"
                 data-cy="montant"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.paiement.createdAt')}
@@ -113,6 +117,9 @@ export const PaiementUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 id="paiement-reservation"

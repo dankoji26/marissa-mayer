@@ -4,8 +4,8 @@ import { IUtilisateur } from 'app/shared/model/utilisateur.model';
 
 export interface IEvaluation {
   id?: number;
-  commentaire?: string | null;
-  createdAt?: string | null;
+  commentaire?: string;
+  createdAt?: string;
   cours?: ICours | null;
   utilisateur?: IUtilisateur | null;
 }

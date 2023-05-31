@@ -8,7 +8,7 @@ export interface ICreneau {
   jour?: Jour | null;
   heureDebut?: string | null;
   heureFin?: string | null;
-  statuts?: CreneauStatuts | null;
+  statuts?: CreneauStatuts;
   cours?: ICours | null;
   utilisateur?: IUtilisateur | null;
 }

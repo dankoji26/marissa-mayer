@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class PaiementResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/paiements")
-    public ResponseEntity<PaiementDTO> createPaiement(@RequestBody PaiementDTO paiementDTO) throws URISyntaxException {
+    public ResponseEntity<PaiementDTO> createPaiement(@Valid @RequestBody PaiementDTO paiementDTO) throws URISyntaxException {
         log.debug("REST request to save Paiement : {}", paiementDTO);
         if (paiementDTO.getId() != null) {
             throw new BadRequestAlertException("A new paiement cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class PaiementResource {
     @PutMapping("/paiements/{id}")
     public ResponseEntity<PaiementDTO> updatePaiement(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody PaiementDTO paiementDTO
+        @Valid @RequestBody PaiementDTO paiementDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Paiement : {}, {}", id, paiementDTO);
         if (paiementDTO.getId() == null) {
@@ -108,7 +110,7 @@ public class PaiementResource {
     @PatchMapping(value = "/paiements/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<PaiementDTO> partialUpdatePaiement(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody PaiementDTO paiementDTO
+        @NotNull @RequestBody PaiementDTO paiementDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Paiement partially : {}, {}", id, paiementDTO);
         if (paiementDTO.getId() == null) {

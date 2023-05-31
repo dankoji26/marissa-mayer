@@ -108,6 +108,9 @@ export const NotificationUpdate = () => {
                 name="message"
                 data-cy="message"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.notification.statuts')}
@@ -129,6 +132,9 @@ export const NotificationUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 id="notification-utilisateur"

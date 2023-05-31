@@ -8,15 +8,18 @@
     {
       "fieldName": "statuts",
       "fieldType": "ReservationStatuts",
+      "fieldValidateRules": ["required"],
       "fieldValues": "REJETEE,EN_ATTENTE,CONFIRMEE"
     },
     {
       "fieldName": "date",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "createdAt",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

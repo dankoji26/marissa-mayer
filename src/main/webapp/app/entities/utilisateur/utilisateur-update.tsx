@@ -101,6 +101,9 @@ export const UtilisateurUpdate = () => {
                 name="nom"
                 data-cy="nom"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.utilisateur.prenom')}
@@ -108,6 +111,9 @@ export const UtilisateurUpdate = () => {
                 name="prenom"
                 data-cy="prenom"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.utilisateur.email')}
@@ -115,6 +121,9 @@ export const UtilisateurUpdate = () => {
                 name="email"
                 data-cy="email"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.utilisateur.password')}
@@ -122,6 +131,9 @@ export const UtilisateurUpdate = () => {
                 name="password"
                 data-cy="password"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.utilisateur.createdAt')}
@@ -130,6 +142,9 @@ export const UtilisateurUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.utilisateur.role')}

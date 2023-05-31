@@ -125,6 +125,42 @@ class EvaluationResourceIT {
 
     @Test
     @Transactional
+    void checkCommentaireIsRequired() throws Exception {
+        int databaseSizeBeforeTest = evaluationRepository.findAll().size();
+        // set the field null
+        evaluation.setCommentaire(null);
+
+        // Create the Evaluation, which fails.
+        EvaluationDTO evaluationDTO = evaluationMapper.toDto(evaluation);
+
+        restEvaluationMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(evaluationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Evaluation> evaluationList = evaluationRepository.findAll();
+        assertThat(evaluationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = evaluationRepository.findAll().size();
+        // set the field null
+        evaluation.setCreatedAt(null);
+
+        // Create the Evaluation, which fails.
+        EvaluationDTO evaluationDTO = evaluationMapper.toDto(evaluation);
+
+        restEvaluationMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(evaluationDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Evaluation> evaluationList = evaluationRepository.findAll();
+        assertThat(evaluationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllEvaluations() throws Exception {
         // Initialize the database
         evaluationRepository.saveAndFlush(evaluation);

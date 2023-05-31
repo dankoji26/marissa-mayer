@@ -3,8 +3,8 @@ import { IReservation } from 'app/shared/model/reservation.model';
 
 export interface IPaiement {
   id?: number;
-  montant?: number | null;
-  createdAt?: string | null;
+  montant?: number;
+  createdAt?: string;
   reservation?: IReservation | null;
 }
 

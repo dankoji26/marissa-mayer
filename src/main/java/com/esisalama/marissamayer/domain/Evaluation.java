@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -24,10 +25,12 @@ public class Evaluation implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "commentaire")
+    @NotNull
+    @Column(name = "commentaire", nullable = false)
     private String commentaire;
 
-    @Column(name = "created_at")
+    @NotNull
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @ManyToOne

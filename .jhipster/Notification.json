@@ -7,16 +7,19 @@
   "fields": [
     {
       "fieldName": "message",
-      "fieldType": "String"
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "statuts",
       "fieldType": "NotificationStatus",
+      "fieldValidateRules": ["required"],
       "fieldValues": "LUE,NON_LUE"
     },
     {
       "fieldName": "createdAt",
-      "fieldType": "Instant"
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

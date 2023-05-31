@@ -92,7 +92,16 @@ export const CategorieUpdate = () => {
                   validate={{ required: true }}
                 />
               ) : null}
-              <ValidatedField label={translate('marissamayerApp.categorie.nom')} id="categorie-nom" name="nom" data-cy="nom" type="text" />
+              <ValidatedField
+                label={translate('marissamayerApp.categorie.nom')}
+                id="categorie-nom"
+                name="nom"
+                data-cy="nom"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
               <ValidatedField
                 label={translate('marissamayerApp.categorie.createdAt')}
                 id="categorie-createdAt"
@@ -100,6 +109,9 @@ export const CategorieUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/categorie" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />

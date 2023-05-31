@@ -4,6 +4,7 @@ import com.esisalama.marissamayer.domain.enumeration.CreneauStatuts;
 import com.esisalama.marissamayer.domain.enumeration.Jour;
 import java.io.Serializable;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.esisalama.marissamayer.domain.Creneau} entity.
@@ -15,10 +16,13 @@ public class CreneauDTO implements Serializable {
 
     private Jour jour;
 
+    @Pattern(regexp = "^([0-2]\\d|1[0-9]|2[0-3]):[0-5]\\d$")
     private String heureDebut;
 
+    @Pattern(regexp = "^([0-2]\\d|1[0-9]|2[0-3]):[0-5]\\d$")
     private String heureFin;
 
+    @NotNull
     private CreneauStatuts statuts;
 
     private CoursDTO cours;

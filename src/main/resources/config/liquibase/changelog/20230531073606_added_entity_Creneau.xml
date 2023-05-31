@@ -24,7 +24,7 @@
                 <constraints nullable="true" />
             </column>
             <column name="statuts" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="false" />
             </column>
             <column name="cours_id" type="bigint">
                 <constraints nullable="true" />

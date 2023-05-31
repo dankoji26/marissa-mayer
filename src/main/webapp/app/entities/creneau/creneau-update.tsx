@@ -119,6 +119,12 @@ export const CreneauUpdate = () => {
                 name="heureDebut"
                 data-cy="heureDebut"
                 type="text"
+                validate={{
+                  pattern: {
+                    value: /^([0-2]\d|1[0-9]|2[0-3]):[0-5]\d$/,
+                    message: translate('entity.validation.pattern', { pattern: '^([0-2]\\d|1[0-9]|2[0-3]):[0-5]\\d$' }),
+                  },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.creneau.heureFin')}
@@ -126,6 +132,12 @@ export const CreneauUpdate = () => {
                 name="heureFin"
                 data-cy="heureFin"
                 type="text"
+                validate={{
+                  pattern: {
+                    value: /^([0-2]\d|1[0-9]|2[0-3]):[0-5]\d$/,
+                    message: translate('entity.validation.pattern', { pattern: '^([0-2]\\d|1[0-9]|2[0-3]):[0-5]\\d$' }),
+                  },
+                }}
               />
               <ValidatedField
                 label={translate('marissamayerApp.creneau.statuts')}

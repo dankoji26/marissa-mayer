@@ -127,6 +127,42 @@ class PaiementResourceIT {
 
     @Test
     @Transactional
+    void checkMontantIsRequired() throws Exception {
+        int databaseSizeBeforeTest = paiementRepository.findAll().size();
+        // set the field null
+        paiement.setMontant(null);
+
+        // Create the Paiement, which fails.
+        PaiementDTO paiementDTO = paiementMapper.toDto(paiement);
+
+        restPaiementMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(paiementDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Paiement> paiementList = paiementRepository.findAll();
+        assertThat(paiementList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = paiementRepository.findAll().size();
+        // set the field null
+        paiement.setCreatedAt(null);
+
+        // Create the Paiement, which fails.
+        PaiementDTO paiementDTO = paiementMapper.toDto(paiement);
+
+        restPaiementMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(paiementDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Paiement> paiementList = paiementRepository.findAll();
+        assertThat(paiementList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllPaiements() throws Exception {
         // Initialize the database
         paiementRepository.saveAndFlush(paiement);

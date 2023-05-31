@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.esisalama.marissamayer.domain.Paiement} entity.
@@ -13,8 +14,10 @@ public class PaiementDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private BigDecimal montant;
 
+    @NotNull
     private Instant createdAt;
 
     private ReservationDTO reservation;

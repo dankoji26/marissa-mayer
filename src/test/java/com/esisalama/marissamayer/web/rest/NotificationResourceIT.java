@@ -134,6 +134,66 @@ class NotificationResourceIT {
 
     @Test
     @Transactional
+    void checkMessageIsRequired() throws Exception {
+        int databaseSizeBeforeTest = notificationRepository.findAll().size();
+        // set the field null
+        notification.setMessage(null);
+
+        // Create the Notification, which fails.
+        NotificationDTO notificationDTO = notificationMapper.toDto(notification);
+
+        restNotificationMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(notificationDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Notification> notificationList = notificationRepository.findAll();
+        assertThat(notificationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkStatutsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = notificationRepository.findAll().size();
+        // set the field null
+        notification.setStatuts(null);
+
+        // Create the Notification, which fails.
+        NotificationDTO notificationDTO = notificationMapper.toDto(notification);
+
+        restNotificationMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(notificationDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Notification> notificationList = notificationRepository.findAll();
+        assertThat(notificationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = notificationRepository.findAll().size();
+        // set the field null
+        notification.setCreatedAt(null);
+
+        // Create the Notification, which fails.
+        NotificationDTO notificationDTO = notificationMapper.toDto(notification);
+
+        restNotificationMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(notificationDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Notification> notificationList = notificationRepository.findAll();
+        assertThat(notificationList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllNotifications() throws Exception {
         // Initialize the database
         notificationRepository.saveAndFlush(notification);

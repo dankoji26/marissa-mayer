@@ -48,7 +48,6 @@ export const CoursUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.duree = convertDateTimeToServer(values.duree);
     values.createdAt = convertDateTimeToServer(values.createdAt);
 
     const entity = {
@@ -67,12 +66,10 @@ export const CoursUpdate = () => {
   const defaultValues = () =>
     isNew
       ? {
-          duree: displayDefaultDateTime(),
           createdAt: displayDefaultDateTime(),
         }
       : {
           ...coursEntity,
-          duree: convertDateTimeFromServer(coursEntity.duree),
           createdAt: convertDateTimeFromServer(coursEntity.createdAt),
           catalogue: coursEntity?.catalogue?.id,
         };
@@ -102,22 +99,27 @@ export const CoursUpdate = () => {
                   validate={{ required: true }}
                 />
               ) : null}
-              <ValidatedField label={translate('marissamayerApp.cours.nom')} id="cours-nom" name="nom" data-cy="nom" type="text" />
+              <ValidatedField
+                label={translate('marissamayerApp.cours.nom')}
+                id="cours-nom"
+                name="nom"
+                data-cy="nom"
+                type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
+              />
               <ValidatedField
                 label={translate('marissamayerApp.cours.description')}
                 id="cours-description"
                 name="description"
                 data-cy="description"
                 type="text"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
-              <ValidatedField
-                label={translate('marissamayerApp.cours.duree')}
-                id="cours-duree"
-                name="duree"
-                data-cy="duree"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-              />
+              <ValidatedField label={translate('marissamayerApp.cours.duree')} id="cours-duree" name="duree" data-cy="duree" type="text" />
               <ValidatedField
                 label={translate('marissamayerApp.cours.prerequis')}
                 id="cours-prerequis"
@@ -132,6 +134,9 @@ export const CoursUpdate = () => {
                 data-cy="createdAt"
                 type="datetime-local"
                 placeholder="YYYY-MM-DD HH:mm"
+                validate={{
+                  required: { value: true, message: translate('entity.validation.required') },
+                }}
               />
               <ValidatedField
                 id="cours-catalogue"

@@ -7,12 +7,12 @@ import { Role } from 'app/shared/model/enumerations/role.model';
 
 export interface IUtilisateur {
   id?: number;
-  nom?: string | null;
-  prenom?: string | null;
-  email?: string | null;
-  password?: string | null;
-  createdAt?: string | null;
-  role?: Role | null;
+  nom?: string;
+  prenom?: string;
+  email?: string;
+  password?: string;
+  createdAt?: string;
+  role?: Role;
   reservations?: IReservation[] | null;
   evaluations?: IEvaluation[] | null;
   notifications?: INotification[] | null;

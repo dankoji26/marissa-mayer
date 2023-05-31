@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class EvaluationResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/evaluations")
-    public ResponseEntity<EvaluationDTO> createEvaluation(@RequestBody EvaluationDTO evaluationDTO) throws URISyntaxException {
+    public ResponseEntity<EvaluationDTO> createEvaluation(@Valid @RequestBody EvaluationDTO evaluationDTO) throws URISyntaxException {
         log.debug("REST request to save Evaluation : {}", evaluationDTO);
         if (evaluationDTO.getId() != null) {
             throw new BadRequestAlertException("A new evaluation cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class EvaluationResource {
     @PutMapping("/evaluations/{id}")
     public ResponseEntity<EvaluationDTO> updateEvaluation(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody EvaluationDTO evaluationDTO
+        @Valid @RequestBody EvaluationDTO evaluationDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Evaluation : {}, {}", id, evaluationDTO);
         if (evaluationDTO.getId() == null) {
@@ -108,7 +110,7 @@ public class EvaluationResource {
     @PatchMapping(value = "/evaluations/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<EvaluationDTO> partialUpdateEvaluation(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody EvaluationDTO evaluationDTO
+        @NotNull @RequestBody EvaluationDTO evaluationDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Evaluation partially : {}, {}", id, evaluationDTO);
         if (evaluationDTO.getId() == null) {

@@ -4,6 +4,7 @@ import com.esisalama.marissamayer.domain.enumeration.ReservationStatuts;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
+import javax.validation.constraints.*;
 
 /**
  * A DTO for the {@link com.esisalama.marissamayer.domain.Reservation} entity.
@@ -13,10 +14,13 @@ public class ReservationDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private ReservationStatuts statuts;
 
+    @NotNull
     private Instant date;
 
+    @NotNull
     private Instant createdAt;
 
     private UtilisateurDTO utilisateur;

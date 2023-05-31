@@ -125,6 +125,42 @@ class CatalogueResourceIT {
 
     @Test
     @Transactional
+    void checkNomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = catalogueRepository.findAll().size();
+        // set the field null
+        catalogue.setNom(null);
+
+        // Create the Catalogue, which fails.
+        CatalogueDTO catalogueDTO = catalogueMapper.toDto(catalogue);
+
+        restCatalogueMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(catalogueDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Catalogue> catalogueList = catalogueRepository.findAll();
+        assertThat(catalogueList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = catalogueRepository.findAll().size();
+        // set the field null
+        catalogue.setCreatedAt(null);
+
+        // Create the Catalogue, which fails.
+        CatalogueDTO catalogueDTO = catalogueMapper.toDto(catalogue);
+
+        restCatalogueMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(catalogueDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Catalogue> catalogueList = catalogueRepository.findAll();
+        assertThat(catalogueList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllCatalogues() throws Exception {
         // Initialize the database
         catalogueRepository.saveAndFlush(catalogue);

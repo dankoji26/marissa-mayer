@@ -5,6 +5,7 @@ import com.esisalama.marissamayer.domain.enumeration.Jour;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,14 +30,17 @@ public class Creneau implements Serializable {
     @Column(name = "jour")
     private Jour jour;
 
+    @Pattern(regexp = "^([0-2]\\d|1[0-9]|2[0-3]):[0-5]\\d$")
     @Column(name = "heure_debut")
     private String heureDebut;
 
+    @Pattern(regexp = "^([0-2]\\d|1[0-9]|2[0-3]):[0-5]\\d$")
     @Column(name = "heure_fin")
     private String heureFin;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name = "statuts")
+    @Column(name = "statuts", nullable = false)
     private CreneauStatuts statuts;
 
     @ManyToOne

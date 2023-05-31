@@ -39,8 +39,8 @@ class CoursResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_DUREE = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_DUREE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final String DEFAULT_DUREE = "AAAAAAAAAA";
+    private static final String UPDATED_DUREE = "BBBBBBBBBB";
 
     private static final String DEFAULT_PREREQUIS = "AAAAAAAAAA";
     private static final String UPDATED_PREREQUIS = "BBBBBBBBBB";
@@ -147,6 +147,60 @@ class CoursResourceIT {
 
     @Test
     @Transactional
+    void checkNomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = coursRepository.findAll().size();
+        // set the field null
+        cours.setNom(null);
+
+        // Create the Cours, which fails.
+        CoursDTO coursDTO = coursMapper.toDto(cours);
+
+        restCoursMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(coursDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Cours> coursList = coursRepository.findAll();
+        assertThat(coursList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkDescriptionIsRequired() throws Exception {
+        int databaseSizeBeforeTest = coursRepository.findAll().size();
+        // set the field null
+        cours.setDescription(null);
+
+        // Create the Cours, which fails.
+        CoursDTO coursDTO = coursMapper.toDto(cours);
+
+        restCoursMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(coursDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Cours> coursList = coursRepository.findAll();
+        assertThat(coursList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = coursRepository.findAll().size();
+        // set the field null
+        cours.setCreatedAt(null);
+
+        // Create the Cours, which fails.
+        CoursDTO coursDTO = coursMapper.toDto(cours);
+
+        restCoursMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(coursDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Cours> coursList = coursRepository.findAll();
+        assertThat(coursList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllCours() throws Exception {
         // Initialize the database
         coursRepository.saveAndFlush(cours);
@@ -159,7 +213,7 @@ class CoursResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(cours.getId().intValue())))
             .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].duree").value(hasItem(DEFAULT_DUREE.toString())))
+            .andExpect(jsonPath("$.[*].duree").value(hasItem(DEFAULT_DUREE)))
             .andExpect(jsonPath("$.[*].prerequis").value(hasItem(DEFAULT_PREREQUIS)))
             .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
     }
@@ -178,7 +232,7 @@ class CoursResourceIT {
             .andExpect(jsonPath("$.id").value(cours.getId().intValue()))
             .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.duree").value(DEFAULT_DUREE.toString()))
+            .andExpect(jsonPath("$.duree").value(DEFAULT_DUREE))
             .andExpect(jsonPath("$.prerequis").value(DEFAULT_PREREQUIS))
             .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
     }

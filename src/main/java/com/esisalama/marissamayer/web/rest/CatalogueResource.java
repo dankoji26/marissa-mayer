@@ -9,6 +9,8 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +50,7 @@ public class CatalogueResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/catalogues")
-    public ResponseEntity<CatalogueDTO> createCatalogue(@RequestBody CatalogueDTO catalogueDTO) throws URISyntaxException {
+    public ResponseEntity<CatalogueDTO> createCatalogue(@Valid @RequestBody CatalogueDTO catalogueDTO) throws URISyntaxException {
         log.debug("REST request to save Catalogue : {}", catalogueDTO);
         if (catalogueDTO.getId() != null) {
             throw new BadRequestAlertException("A new catalogue cannot already have an ID", ENTITY_NAME, "idexists");
@@ -73,7 +75,7 @@ public class CatalogueResource {
     @PutMapping("/catalogues/{id}")
     public ResponseEntity<CatalogueDTO> updateCatalogue(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CatalogueDTO catalogueDTO
+        @Valid @RequestBody CatalogueDTO catalogueDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Catalogue : {}, {}", id, catalogueDTO);
         if (catalogueDTO.getId() == null) {
@@ -108,7 +110,7 @@ public class CatalogueResource {
     @PatchMapping(value = "/catalogues/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<CatalogueDTO> partialUpdateCatalogue(
         @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody CatalogueDTO catalogueDTO
+        @NotNull @RequestBody CatalogueDTO catalogueDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Catalogue partially : {}, {}", id, catalogueDTO);
         if (catalogueDTO.getId() == null) {

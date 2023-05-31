@@ -158,6 +158,126 @@ class UtilisateurResourceIT {
 
     @Test
     @Transactional
+    void checkNomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = utilisateurRepository.findAll().size();
+        // set the field null
+        utilisateur.setNom(null);
+
+        // Create the Utilisateur, which fails.
+        UtilisateurDTO utilisateurDTO = utilisateurMapper.toDto(utilisateur);
+
+        restUtilisateurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(utilisateurDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Utilisateur> utilisateurList = utilisateurRepository.findAll();
+        assertThat(utilisateurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkPrenomIsRequired() throws Exception {
+        int databaseSizeBeforeTest = utilisateurRepository.findAll().size();
+        // set the field null
+        utilisateur.setPrenom(null);
+
+        // Create the Utilisateur, which fails.
+        UtilisateurDTO utilisateurDTO = utilisateurMapper.toDto(utilisateur);
+
+        restUtilisateurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(utilisateurDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Utilisateur> utilisateurList = utilisateurRepository.findAll();
+        assertThat(utilisateurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkEmailIsRequired() throws Exception {
+        int databaseSizeBeforeTest = utilisateurRepository.findAll().size();
+        // set the field null
+        utilisateur.setEmail(null);
+
+        // Create the Utilisateur, which fails.
+        UtilisateurDTO utilisateurDTO = utilisateurMapper.toDto(utilisateur);
+
+        restUtilisateurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(utilisateurDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Utilisateur> utilisateurList = utilisateurRepository.findAll();
+        assertThat(utilisateurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkPasswordIsRequired() throws Exception {
+        int databaseSizeBeforeTest = utilisateurRepository.findAll().size();
+        // set the field null
+        utilisateur.setPassword(null);
+
+        // Create the Utilisateur, which fails.
+        UtilisateurDTO utilisateurDTO = utilisateurMapper.toDto(utilisateur);
+
+        restUtilisateurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(utilisateurDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Utilisateur> utilisateurList = utilisateurRepository.findAll();
+        assertThat(utilisateurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkCreatedAtIsRequired() throws Exception {
+        int databaseSizeBeforeTest = utilisateurRepository.findAll().size();
+        // set the field null
+        utilisateur.setCreatedAt(null);
+
+        // Create the Utilisateur, which fails.
+        UtilisateurDTO utilisateurDTO = utilisateurMapper.toDto(utilisateur);
+
+        restUtilisateurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(utilisateurDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Utilisateur> utilisateurList = utilisateurRepository.findAll();
+        assertThat(utilisateurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkRoleIsRequired() throws Exception {
+        int databaseSizeBeforeTest = utilisateurRepository.findAll().size();
+        // set the field null
+        utilisateur.setRole(null);
+
+        // Create the Utilisateur, which fails.
+        UtilisateurDTO utilisateurDTO = utilisateurMapper.toDto(utilisateur);
+
+        restUtilisateurMockMvc
+            .perform(
+                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(utilisateurDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<Utilisateur> utilisateurList = utilisateurRepository.findAll();
+        assertThat(utilisateurList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllUtilisateurs() throws Exception {
         // Initialize the database
         utilisateurRepository.saveAndFlush(utilisateur);

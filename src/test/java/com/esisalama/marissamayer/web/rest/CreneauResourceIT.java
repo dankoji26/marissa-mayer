@@ -36,11 +36,11 @@ class CreneauResourceIT {
     private static final Jour DEFAULT_JOUR = Jour.LUNDI;
     private static final Jour UPDATED_JOUR = Jour.MARDI;
 
-    private static final String DEFAULT_HEURE_DEBUT = "AAAAAAAAAA";
-    private static final String UPDATED_HEURE_DEBUT = "BBBBBBBBBB";
+    private static final String DEFAULT_HEURE_DEBUT = "15:18";
+    private static final String UPDATED_HEURE_DEBUT = "19:13";
 
-    private static final String DEFAULT_HEURE_FIN = "AAAAAAAAAA";
-    private static final String UPDATED_HEURE_FIN = "BBBBBBBBBB";
+    private static final String DEFAULT_HEURE_FIN = "17:12";
+    private static final String UPDATED_HEURE_FIN = "10:36";
 
     private static final CreneauStatuts DEFAULT_STATUTS = CreneauStatuts.LIBRE;
     private static final CreneauStatuts UPDATED_STATUTS = CreneauStatuts.OCCUPEE;
@@ -137,6 +137,24 @@ class CreneauResourceIT {
         // Validate the Creneau in the database
         List<Creneau> creneauList = creneauRepository.findAll();
         assertThat(creneauList).hasSize(databaseSizeBeforeCreate);
+    }
+
+    @Test
+    @Transactional
+    void checkStatutsIsRequired() throws Exception {
+        int databaseSizeBeforeTest = creneauRepository.findAll().size();
+        // set the field null
+        creneau.setStatuts(null);
+
+        // Create the Creneau, which fails.
+        CreneauDTO creneauDTO = creneauMapper.toDto(creneau);
+
+        restCreneauMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(creneauDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Creneau> creneauList = creneauRepository.findAll();
+        assertThat(creneauList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -292,7 +310,7 @@ class CreneauResourceIT {
         Creneau partialUpdatedCreneau = new Creneau();
         partialUpdatedCreneau.setId(creneau.getId());
 
-        partialUpdatedCreneau.heureDebut(UPDATED_HEURE_DEBUT).heureFin(UPDATED_HEURE_FIN);
+        partialUpdatedCreneau.jour(UPDATED_JOUR).heureFin(UPDATED_HEURE_FIN).statuts(UPDATED_STATUTS);
 
         restCreneauMockMvc
             .perform(
@@ -306,10 +324,10 @@ class CreneauResourceIT {
         List<Creneau> creneauList = creneauRepository.findAll();
         assertThat(creneauList).hasSize(databaseSizeBeforeUpdate);
         Creneau testCreneau = creneauList.get(creneauList.size() - 1);
-        assertThat(testCreneau.getJour()).isEqualTo(DEFAULT_JOUR);
-        assertThat(testCreneau.getHeureDebut()).isEqualTo(UPDATED_HEURE_DEBUT);
+        assertThat(testCreneau.getJour()).isEqualTo(UPDATED_JOUR);
+        assertThat(testCreneau.getHeureDebut()).isEqualTo(DEFAULT_HEURE_DEBUT);
         assertThat(testCreneau.getHeureFin()).isEqualTo(UPDATED_HEURE_FIN);
-        assertThat(testCreneau.getStatuts()).isEqualTo(DEFAULT_STATUTS);
+        assertThat(testCreneau.getStatuts()).isEqualTo(UPDATED_STATUTS);
     }
 
     @Test

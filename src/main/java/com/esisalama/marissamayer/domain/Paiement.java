@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,10 +26,12 @@ public class Paiement implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "montant", precision = 21, scale = 2)
+    @NotNull
+    @Column(name = "montant", precision = 21, scale = 2, nullable = false)
     private BigDecimal montant;
 
-    @Column(name = "created_at")
+    @NotNull
+    @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
     @JsonIgnoreProperties(value = { "utilisateur" }, allowSetters = true)
