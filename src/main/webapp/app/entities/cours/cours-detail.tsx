@@ -49,7 +49,7 @@ export const CoursDetail = () => {
               <Translate contentKey="marissamayerApp.cours.duree">Duree</Translate>
             </span>
           </dt>
-          <dd>{coursEntity.duree}</dd>
+          <dd>{coursEntity.duree} Heures</dd>
           <dt>
             <span id="prerequis">
               <Translate contentKey="marissamayerApp.cours.prerequis">Prerequis</Translate>

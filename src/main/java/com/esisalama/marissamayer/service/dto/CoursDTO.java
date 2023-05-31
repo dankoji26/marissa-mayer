@@ -19,7 +19,7 @@ public class CoursDTO implements Serializable {
     @NotNull
     private String description;
 
-    private String duree;
+    private Integer duree;
 
     private String prerequis;
 
@@ -52,11 +52,11 @@ public class CoursDTO implements Serializable {
         this.description = description;
     }
 
-    public String getDuree() {
+    public Integer getDuree() {
         return duree;
     }
 
-    public void setDuree(String duree) {
+    public void setDuree(Integer duree) {
         this.duree = duree;
     }
 
@@ -112,7 +112,7 @@ public class CoursDTO implements Serializable {
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
             ", description='" + getDescription() + "'" +
-            ", duree='" + getDuree() + "'" +
+            ", duree=" + getDuree() +
             ", prerequis='" + getPrerequis() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             ", catalogue=" + getCatalogue() +

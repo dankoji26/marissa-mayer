@@ -33,7 +33,7 @@ entity Categorie {
 entity Cours {
     nom String required,
     description String required,
-    duree String,
+    duree Integer,
     prerequis String,
     createdAt Instant required
 }

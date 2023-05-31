@@ -20,7 +20,7 @@
             <column name="description" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="duree" type="varchar(255)">
+            <column name="duree" type="integer">
                 <constraints nullable="true" />
             </column>
             <column name="prerequis" type="varchar(255)">
@@ -56,7 +56,7 @@
             <column name="id" type="numeric"/>
             <column name="nom" type="string"/>
             <column name="description" type="string"/>
-            <column name="duree" type="string"/>
+            <column name="duree" type="numeric"/>
             <column name="prerequis" type="string"/>
             <column name="created_at" type="date"/>
             <column name="catalogue_id" type="numeric"/>

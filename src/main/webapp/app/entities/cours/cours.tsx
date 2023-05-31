@@ -82,7 +82,7 @@ export const Cours = () => {
                   </td>
                   <td>{cours.nom}</td>
                   <td>{cours.description}</td>
-                  <td>{cours.duree}</td>
+                  <td><b>{cours.duree}</b> Heures</td>
                   <td>{cours.prerequis}</td>
                   <td>{cours.createdAt ? <TextFormat type="date" value={cours.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>{cours.catalogue ? <Link to={`/catalogue/${cours.catalogue.id}`}>{cours.catalogue.id}</Link> : ''}</td>

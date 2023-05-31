@@ -7,7 +7,7 @@ export interface ICours {
   id?: number;
   nom?: string;
   description?: string;
-  duree?: string | null;
+  duree?: number | null;
   prerequis?: string | null;
   createdAt?: string;
   evaluations?: IEvaluation[] | null;

@@ -40,8 +40,8 @@ class CoursResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
-    private static final String DEFAULT_DUREE = "AAAAAAAAAA";
-    private static final String UPDATED_DUREE = "BBBBBBBBBB";
+    private static final Integer DEFAULT_DUREE = 1;
+    private static final Integer UPDATED_DUREE = 2;
 
     private static final String DEFAULT_PREREQUIS = "AAAAAAAAAA";
     private static final String UPDATED_PREREQUIS = "BBBBBBBBBB";

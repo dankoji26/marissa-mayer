@@ -17,7 +17,7 @@
     },
     {
       "fieldName": "duree",
-      "fieldType": "String"
+      "fieldType": "Integer"
     },
     {
       "fieldName": "prerequis",

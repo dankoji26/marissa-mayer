@@ -36,7 +36,7 @@ public class Cours implements Serializable {
     private String description;
 
     @Column(name = "duree")
-    private String duree;
+    private Integer duree;
 
     @Column(name = "prerequis")
     private String prerequis;
@@ -101,16 +101,16 @@ public class Cours implements Serializable {
         this.description = description;
     }
 
-    public String getDuree() {
+    public Integer getDuree() {
         return this.duree;
     }
 
-    public Cours duree(String duree) {
+    public Cours duree(Integer duree) {
         this.setDuree(duree);
         return this;
     }
 
-    public void setDuree(String duree) {
+    public void setDuree(Integer duree) {
         this.duree = duree;
     }
 
@@ -241,7 +241,7 @@ public class Cours implements Serializable {
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
             ", description='" + getDescription() + "'" +
-            ", duree='" + getDuree() + "'" +
+            ", duree=" + getDuree() +
             ", prerequis='" + getPrerequis() + "'" +
             ", createdAt='" + getCreatedAt() + "'" +
             "}";
