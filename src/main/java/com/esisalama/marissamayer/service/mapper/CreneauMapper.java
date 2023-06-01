@@ -20,10 +20,12 @@ public interface CreneauMapper extends EntityMapper<CreneauDTO, Creneau> {
     @Named("coursId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nom", source = "nom")
     CoursDTO toDtoCoursId(Cours cours);
 
     @Named("utilisateurId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "email", source = "email")
     UtilisateurDTO toDtoUtilisateurId(Utilisateur utilisateur);
 }

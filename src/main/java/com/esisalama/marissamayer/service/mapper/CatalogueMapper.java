@@ -17,5 +17,6 @@ public interface CatalogueMapper extends EntityMapper<CatalogueDTO, Catalogue> {
     @Named("utilisateurId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "email", source = "email")
     UtilisateurDTO toDtoUtilisateurId(Utilisateur utilisateur);
 }

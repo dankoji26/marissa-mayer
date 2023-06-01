@@ -74,7 +74,7 @@ export const Catalogue = () => {
                   <td>{catalogue.nom}</td>
                   <td>{catalogue.createdAt ? <TextFormat type="date" value={catalogue.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>
-                    {catalogue.utilisateur ? <Link to={`/utilisateur/${catalogue.utilisateur.id}`}>{catalogue.utilisateur.id}</Link> : ''}
+                    {catalogue.utilisateur ? <Link to={`/utilisateur/${catalogue.utilisateur.id}`}>{catalogue.utilisateur.email}</Link> : ''}
                   </td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

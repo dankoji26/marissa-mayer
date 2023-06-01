@@ -83,7 +83,7 @@ export const Reservation = () => {
                   </td>
                   <td>
                     {reservation.utilisateur ? (
-                      <Link to={`/utilisateur/${reservation.utilisateur.id}`}>{reservation.utilisateur.id}</Link>
+                      <Link to={`/utilisateur/${reservation.utilisateur.id}`}>{reservation.utilisateur.email}</Link>
                     ) : (
                       ''
                     )}

@@ -17,5 +17,6 @@ public interface CoursMapper extends EntityMapper<CoursDTO, Cours> {
     @Named("catalogueId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
+    @Mapping(target = "nom", source = "nom")
     CatalogueDTO toDtoCatalogueId(Catalogue catalogue);
 }

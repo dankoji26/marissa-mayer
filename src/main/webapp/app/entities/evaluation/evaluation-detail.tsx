@@ -49,11 +49,11 @@ export const EvaluationDetail = () => {
           <dt>
             <Translate contentKey="marissamayerApp.evaluation.cours">Cours</Translate>
           </dt>
-          <dd>{evaluationEntity.cours ? evaluationEntity.cours.id : ''}</dd>
+          <dd>{evaluationEntity.cours ? evaluationEntity.cours.nom : ''}</dd>
           <dt>
             <Translate contentKey="marissamayerApp.evaluation.utilisateur">Utilisateur</Translate>
           </dt>
-          <dd>{evaluationEntity.utilisateur ? evaluationEntity.utilisateur.id : ''}</dd>
+          <dd>{evaluationEntity.utilisateur ? evaluationEntity.utilisateur.email : ''}</dd>
         </dl>
         <Button tag={Link} to="/evaluation" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

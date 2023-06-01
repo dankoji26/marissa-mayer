@@ -85,7 +85,7 @@ export const Cours = () => {
                   <td><b>{cours.duree}</b> Heures</td>
                   <td>{cours.prerequis}</td>
                   <td>{cours.createdAt ? <TextFormat type="date" value={cours.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{cours.catalogue ? <Link to={`/catalogue/${cours.catalogue.id}`}>{cours.catalogue.id}</Link> : ''}</td>
+                  <td>{cours.catalogue ? <Link to={`/catalogue/${cours.catalogue.id}`}>{cours.catalogue.nom}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/cours/${cours.id}`} color="info" size="sm" data-cy="entityDetailsButton">

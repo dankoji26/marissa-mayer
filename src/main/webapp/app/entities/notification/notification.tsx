@@ -83,7 +83,7 @@ export const Notification = () => {
                   </td>
                   <td>
                     {notification.utilisateur ? (
-                      <Link to={`/utilisateur/${notification.utilisateur.id}`}>{notification.utilisateur.id}</Link>
+                      <Link to={`/utilisateur/${notification.utilisateur.id}`}>{notification.utilisateur.email}</Link>
                     ) : (
                       ''
                     )}

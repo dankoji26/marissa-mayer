@@ -65,7 +65,7 @@ export const CoursDetail = () => {
           <dt>
             <Translate contentKey="marissamayerApp.cours.catalogue">Catalogue</Translate>
           </dt>
-          <dd>{coursEntity.catalogue ? coursEntity.catalogue.id : ''}</dd>
+          <dd>{coursEntity.catalogue ? coursEntity.catalogue.nom : ''}</dd>
         </dl>
         <Button tag={Link} to="/cours" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

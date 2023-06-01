@@ -76,10 +76,10 @@ export const Evaluation = () => {
                   </td>
                   <td>{evaluation.commentaire}</td>
                   <td>{evaluation.createdAt ? <TextFormat type="date" value={evaluation.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{evaluation.cours ? <Link to={`/cours/${evaluation.cours.id}`}>{evaluation.cours.id}</Link> : ''}</td>
+                  <td>{evaluation.cours ? <Link to={`/cours/${evaluation.cours.id}`}>{evaluation.cours.nom}</Link> : ''}</td>
                   <td>
                     {evaluation.utilisateur ? (
-                      <Link to={`/utilisateur/${evaluation.utilisateur.id}`}>{evaluation.utilisateur.id}</Link>
+                      <Link to={`/utilisateur/${evaluation.utilisateur.id}`}>{evaluation.utilisateur.email}</Link>
                     ) : (
                       ''
                     )}

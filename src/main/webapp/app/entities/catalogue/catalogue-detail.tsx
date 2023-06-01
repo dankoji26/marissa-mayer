@@ -49,7 +49,7 @@ export const CatalogueDetail = () => {
           <dt>
             <Translate contentKey="marissamayerApp.catalogue.utilisateur">Utilisateur</Translate>
           </dt>
-          <dd>{catalogueEntity.utilisateur ? catalogueEntity.utilisateur.id : ''}</dd>
+          <dd>{catalogueEntity.utilisateur ? catalogueEntity.utilisateur.email : ''}</dd>
         </dl>
         <Button tag={Link} to="/catalogue" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

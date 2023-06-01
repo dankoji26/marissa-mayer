@@ -55,7 +55,7 @@ export const ReservationDetail = () => {
           <dt>
             <Translate contentKey="marissamayerApp.reservation.utilisateur">Utilisateur</Translate>
           </dt>
-          <dd>{reservationEntity.utilisateur ? reservationEntity.utilisateur.id : ''}</dd>
+          <dd>{reservationEntity.utilisateur ? reservationEntity.utilisateur.email : ''}</dd>
         </dl>
         <Button tag={Link} to="/reservation" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

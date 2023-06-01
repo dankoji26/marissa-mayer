@@ -150,7 +150,7 @@ export const CoursUpdate = () => {
                 {catalogues
                   ? catalogues.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nom}
                       </option>
                     ))
                   : null}

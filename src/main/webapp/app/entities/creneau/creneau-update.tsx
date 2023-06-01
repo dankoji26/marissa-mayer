@@ -164,7 +164,7 @@ export const CreneauUpdate = () => {
                 {cours
                   ? cours.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.nom}
                       </option>
                     ))
                   : null}
@@ -184,7 +184,7 @@ export const CreneauUpdate = () => {
                 {utilisateurs
                   ? utilisateurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.email}
                       </option>
                     ))
                   : null}

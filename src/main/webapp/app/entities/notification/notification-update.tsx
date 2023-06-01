@@ -148,7 +148,7 @@ export const NotificationUpdate = () => {
                 {utilisateurs
                   ? utilisateurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.email}
                       </option>
                     ))
                   : null}
