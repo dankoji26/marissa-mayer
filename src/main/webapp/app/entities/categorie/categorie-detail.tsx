@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -38,14 +38,6 @@ export const CategorieDetail = () => {
             </span>
           </dt>
           <dd>{categorieEntity.nom}</dd>
-          <dt>
-            <span id="createdAt">
-              <Translate contentKey="marissamayerApp.categorie.createdAt">Created At</Translate>
-            </span>
-          </dt>
-          <dd>
-            {categorieEntity.createdAt ? <TextFormat value={categorieEntity.createdAt} type="date" format={APP_DATE_FORMAT} /> : null}
-          </dd>
         </dl>
         <Button tag={Link} to="/categorie" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

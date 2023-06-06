@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -52,22 +52,7 @@ export const Utilisateur = () => {
                   <Translate contentKey="marissamayerApp.utilisateur.id">ID</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="marissamayerApp.utilisateur.nom">Nom</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="marissamayerApp.utilisateur.prenom">Prenom</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="marissamayerApp.utilisateur.email">Email</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="marissamayerApp.utilisateur.password">Password</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="marissamayerApp.utilisateur.createdAt">Created At</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="marissamayerApp.utilisateur.role">Role</Translate>
+                  <Translate contentKey="marissamayerApp.utilisateur.instance">Instance</Translate>
                 </th>
                 <th />
               </tr>
@@ -80,16 +65,7 @@ export const Utilisateur = () => {
                       {utilisateur.id}
                     </Button>
                   </td>
-                  <td>{utilisateur.nom}</td>
-                  <td>{utilisateur.prenom}</td>
-                  <td>{utilisateur.email}</td>
-                  <td>{utilisateur.password}</td>
-                  <td>
-                    {utilisateur.createdAt ? <TextFormat type="date" value={utilisateur.createdAt} format={APP_DATE_FORMAT} /> : null}
-                  </td>
-                  <td>
-                    <Translate contentKey={`marissamayerApp.Role.${utilisateur.role}`} />
-                  </td>
+                  <td>{utilisateur.instance ? utilisateur.instance.id : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/utilisateur/${utilisateur.id}`} color="info" size="sm" data-cy="entityDetailsButton">

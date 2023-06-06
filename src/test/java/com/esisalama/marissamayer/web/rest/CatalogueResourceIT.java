@@ -7,12 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.esisalama.marissamayer.IntegrationTest;
 import com.esisalama.marissamayer.domain.Catalogue;
-import com.esisalama.marissamayer.domain.Utilisateur;
+import com.esisalama.marissamayer.domain.User;
 import com.esisalama.marissamayer.repository.CatalogueRepository;
 import com.esisalama.marissamayer.service.dto.CatalogueDTO;
 import com.esisalama.marissamayer.service.mapper.CatalogueMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -36,9 +34,6 @@ class CatalogueResourceIT {
 
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
-
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String ENTITY_API_URL = "/api/catalogues";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -67,17 +62,12 @@ class CatalogueResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Catalogue createEntity(EntityManager em) {
-        Catalogue catalogue = new Catalogue().nom(DEFAULT_NOM).createdAt(DEFAULT_CREATED_AT);
+        Catalogue catalogue = new Catalogue().nom(DEFAULT_NOM);
         // Add required entity
-        Utilisateur utilisateur;
-        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
-            utilisateur = UtilisateurResourceIT.createEntity(em);
-            em.persist(utilisateur);
-            em.flush();
-        } else {
-            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
-        }
-        catalogue.setUtilisateur(utilisateur);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        catalogue.setUser(user);
         return catalogue;
     }
 
@@ -88,17 +78,12 @@ class CatalogueResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Catalogue createUpdatedEntity(EntityManager em) {
-        Catalogue catalogue = new Catalogue().nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        Catalogue catalogue = new Catalogue().nom(UPDATED_NOM);
         // Add required entity
-        Utilisateur utilisateur;
-        if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
-            utilisateur = UtilisateurResourceIT.createUpdatedEntity(em);
-            em.persist(utilisateur);
-            em.flush();
-        } else {
-            utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
-        }
-        catalogue.setUtilisateur(utilisateur);
+        User user = UserResourceIT.createEntity(em);
+        em.persist(user);
+        em.flush();
+        catalogue.setUser(user);
         return catalogue;
     }
 
@@ -122,7 +107,6 @@ class CatalogueResourceIT {
         assertThat(catalogueList).hasSize(databaseSizeBeforeCreate + 1);
         Catalogue testCatalogue = catalogueList.get(catalogueList.size() - 1);
         assertThat(testCatalogue.getNom()).isEqualTo(DEFAULT_NOM);
-        assertThat(testCatalogue.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
     }
 
     @Test
@@ -164,24 +148,6 @@ class CatalogueResourceIT {
 
     @Test
     @Transactional
-    void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = catalogueRepository.findAll().size();
-        // set the field null
-        catalogue.setCreatedAt(null);
-
-        // Create the Catalogue, which fails.
-        CatalogueDTO catalogueDTO = catalogueMapper.toDto(catalogue);
-
-        restCatalogueMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(catalogueDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Catalogue> catalogueList = catalogueRepository.findAll();
-        assertThat(catalogueList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllCatalogues() throws Exception {
         // Initialize the database
         catalogueRepository.saveAndFlush(catalogue);
@@ -192,8 +158,7 @@ class CatalogueResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(catalogue.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)));
     }
 
     @Test
@@ -208,8 +173,7 @@ class CatalogueResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(catalogue.getId().intValue()))
-            .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.nom").value(DEFAULT_NOM));
     }
 
     @Test
@@ -231,7 +195,7 @@ class CatalogueResourceIT {
         Catalogue updatedCatalogue = catalogueRepository.findById(catalogue.getId()).get();
         // Disconnect from session so that the updates on updatedCatalogue are not directly saved in db
         em.detach(updatedCatalogue);
-        updatedCatalogue.nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        updatedCatalogue.nom(UPDATED_NOM);
         CatalogueDTO catalogueDTO = catalogueMapper.toDto(updatedCatalogue);
 
         restCatalogueMockMvc
@@ -247,7 +211,6 @@ class CatalogueResourceIT {
         assertThat(catalogueList).hasSize(databaseSizeBeforeUpdate);
         Catalogue testCatalogue = catalogueList.get(catalogueList.size() - 1);
         assertThat(testCatalogue.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCatalogue.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test
@@ -342,7 +305,6 @@ class CatalogueResourceIT {
         assertThat(catalogueList).hasSize(databaseSizeBeforeUpdate);
         Catalogue testCatalogue = catalogueList.get(catalogueList.size() - 1);
         assertThat(testCatalogue.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCatalogue.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
     }
 
     @Test
@@ -357,7 +319,7 @@ class CatalogueResourceIT {
         Catalogue partialUpdatedCatalogue = new Catalogue();
         partialUpdatedCatalogue.setId(catalogue.getId());
 
-        partialUpdatedCatalogue.nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        partialUpdatedCatalogue.nom(UPDATED_NOM);
 
         restCatalogueMockMvc
             .perform(
@@ -372,7 +334,6 @@ class CatalogueResourceIT {
         assertThat(catalogueList).hasSize(databaseSizeBeforeUpdate);
         Catalogue testCatalogue = catalogueList.get(catalogueList.size() - 1);
         assertThat(testCatalogue.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCatalogue.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test

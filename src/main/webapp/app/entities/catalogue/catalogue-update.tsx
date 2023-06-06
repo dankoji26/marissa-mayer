@@ -8,8 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IUtilisateur } from 'app/shared/model/utilisateur.model';
-import { getEntities as getUtilisateurs } from 'app/entities/utilisateur/utilisateur.reducer';
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { ICatalogue } from 'app/shared/model/catalogue.model';
 import { getEntity, updateEntity, createEntity, reset } from './catalogue.reducer';
 
@@ -21,7 +21,7 @@ export const CatalogueUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
-  const utilisateurs = useAppSelector(state => state.utilisateur.entities);
+  const users = useAppSelector(state => state.userManagement.users);
   const catalogueEntity = useAppSelector(state => state.catalogue.entity);
   const loading = useAppSelector(state => state.catalogue.loading);
   const updating = useAppSelector(state => state.catalogue.updating);
@@ -38,7 +38,7 @@ export const CatalogueUpdate = () => {
       dispatch(getEntity(id));
     }
 
-    dispatch(getUtilisateurs({}));
+    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -48,12 +48,10 @@ export const CatalogueUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.createdAt = convertDateTimeToServer(values.createdAt);
-
     const entity = {
       ...catalogueEntity,
       ...values,
-      utilisateur: utilisateurs.find(it => it.id.toString() === values.utilisateur.toString()),
+      user: users.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -65,13 +63,10 @@ export const CatalogueUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {
-          createdAt: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...catalogueEntity,
-          createdAt: convertDateTimeFromServer(catalogueEntity.createdAt),
-          utilisateur: catalogueEntity?.utilisateur?.id,
+          user: catalogueEntity?.user?.id,
         };
 
   return (
@@ -110,29 +105,18 @@ export const CatalogueUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('marissamayerApp.catalogue.createdAt')}
-                id="catalogue-createdAt"
-                name="createdAt"
-                data-cy="createdAt"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                id="catalogue-utilisateur"
-                name="utilisateur"
-                data-cy="utilisateur"
-                label={translate('marissamayerApp.catalogue.utilisateur')}
+                id="catalogue-user"
+                name="user"
+                data-cy="user"
+                label={translate('marissamayerApp.catalogue.user')}
                 type="select"
                 required
               >
                 <option value="" key="0" />
-                {utilisateurs
-                  ? utilisateurs.map(otherEntity => (
+                {users
+                  ? users.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.email}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

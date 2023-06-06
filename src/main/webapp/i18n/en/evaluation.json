@@ -21,7 +21,7 @@
       "commentaire": "Commentaire",
       "createdAt": "Created At",
       "cours": "Cours",
-      "utilisateur": "Utilisateur"
+      "user": "User"
     }
   }
 }

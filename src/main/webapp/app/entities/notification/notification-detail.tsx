@@ -55,7 +55,7 @@ export const NotificationDetail = () => {
           <dt>
             <Translate contentKey="marissamayerApp.notification.utilisateur">Utilisateur</Translate>
           </dt>
-          <dd>{notificationEntity.utilisateur ? notificationEntity.utilisateur.email : ''}</dd>
+          <dd>{notificationEntity.utilisateur ? notificationEntity.utilisateur.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/notification" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -15,11 +15,6 @@
       "fieldName": "date",
       "fieldType": "Instant",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "createdAt",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
@@ -31,7 +26,14 @@
     {
       "otherEntityName": "utilisateur",
       "otherEntityRelationshipName": "reservation",
-      "relationshipName": "utilisateur",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "reservation",
+      "relationshipName": "cours",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     }

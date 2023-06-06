@@ -1,8 +1,9 @@
 package com.esisalama.marissamayer.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.validation.constraints.*;
 
 /**
@@ -23,8 +24,9 @@ public class CoursDTO implements Serializable {
 
     private String prerequis;
 
-    @NotNull
-    private Instant createdAt;
+    private Long prix;
+
+    private Set<CategorieDTO> categories = new HashSet<>();
 
     private CatalogueDTO catalogue;
 
@@ -68,12 +70,20 @@ public class CoursDTO implements Serializable {
         this.prerequis = prerequis;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public Long getPrix() {
+        return prix;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setPrix(Long prix) {
+        this.prix = prix;
+    }
+
+    public Set<CategorieDTO> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<CategorieDTO> categories) {
+        this.categories = categories;
     }
 
     public CatalogueDTO getCatalogue() {
@@ -114,7 +124,8 @@ public class CoursDTO implements Serializable {
             ", description='" + getDescription() + "'" +
             ", duree=" + getDuree() +
             ", prerequis='" + getPrerequis() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
+            ", prix=" + getPrix() +
+            ", categories=" + getCategories() +
             ", catalogue=" + getCatalogue() +
             "}";
     }

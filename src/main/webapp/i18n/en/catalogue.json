@@ -19,8 +19,7 @@
       },
       "id": "ID",
       "nom": "Nom",
-      "createdAt": "Created At",
-      "utilisateur": "Utilisateur",
+      "user": "User",
       "cours": "Cours"
     }
   }

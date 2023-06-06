@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -55,10 +55,7 @@ export const Catalogue = () => {
                   <Translate contentKey="marissamayerApp.catalogue.nom">Nom</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="marissamayerApp.catalogue.createdAt">Created At</Translate>
-                </th>
-                <th>
-                  <Translate contentKey="marissamayerApp.catalogue.utilisateur">Utilisateur</Translate>
+                  <Translate contentKey="marissamayerApp.catalogue.user">User</Translate>
                 </th>
                 <th />
               </tr>
@@ -72,10 +69,7 @@ export const Catalogue = () => {
                     </Button>
                   </td>
                   <td>{catalogue.nom}</td>
-                  <td>{catalogue.createdAt ? <TextFormat type="date" value={catalogue.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>
-                    {catalogue.utilisateur ? <Link to={`/utilisateur/${catalogue.utilisateur.id}`}>{catalogue.utilisateur.email}</Link> : ''}
-                  </td>
+                  <td>{catalogue.user ? catalogue.user.id : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/catalogue/${catalogue.id}`} color="info" size="sm" data-cy="entityDetailsButton">

@@ -8,10 +8,16 @@
     -->
     <changeSet id="20230531072906-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="utilisateur_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="reservation"
-                                 constraintName="fk_reservation__utilisateur_id"
+                                 constraintName="fk_reservation__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="utilisateur"/>
+
+        <addForeignKeyConstraint baseColumnNames="cours_id"
+                                 baseTableName="reservation"
+                                 constraintName="fk_reservation__cours_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="cours"/>
     </changeSet>
 </databaseChangeLog>

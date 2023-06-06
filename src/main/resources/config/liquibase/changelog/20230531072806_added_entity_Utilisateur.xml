@@ -14,27 +14,11 @@
             <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="nom" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="prenom" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="email" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="password" type="varchar(255)">
-                <constraints nullable="false" />
-            </column>
-            <column name="created_at" type="${datetimeType}">
-                <constraints nullable="false" />
-            </column>
-            <column name="role" type="varchar(255)">
-                <constraints nullable="false" />
+            <column name="instance_id" type="bigint">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_utilisateur__instance_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="utilisateur" columnName="created_at" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -54,12 +38,7 @@
                   tableName="utilisateur"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="nom" type="string"/>
-            <column name="prenom" type="string"/>
-            <column name="email" type="string"/>
-            <column name="password" type="string"/>
-            <column name="created_at" type="date"/>
-            <column name="role" type="string"/>
+            <column name="instance_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -9,11 +9,6 @@
       "fieldName": "nom",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "createdAt",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
@@ -23,9 +18,9 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityName": "utilisateur",
+      "otherEntityName": "user",
       "ownerSide": true,
-      "relationshipName": "utilisateur",
+      "relationshipName": "user",
       "relationshipType": "one-to-one",
       "relationshipValidateRules": "required"
     },

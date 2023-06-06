@@ -51,13 +51,15 @@ public class CacheConfiguration {
             createCache(cm, com.esisalama.marissamayer.domain.Utilisateur.class.getName());
             createCache(cm, com.esisalama.marissamayer.domain.Utilisateur.class.getName() + ".reservations");
             createCache(cm, com.esisalama.marissamayer.domain.Utilisateur.class.getName() + ".evaluations");
-            createCache(cm, com.esisalama.marissamayer.domain.Utilisateur.class.getName() + ".notifications");
             createCache(cm, com.esisalama.marissamayer.domain.Utilisateur.class.getName() + ".creneaus");
             createCache(cm, com.esisalama.marissamayer.domain.Reservation.class.getName());
             createCache(cm, com.esisalama.marissamayer.domain.Categorie.class.getName());
+            createCache(cm, com.esisalama.marissamayer.domain.Categorie.class.getName() + ".cours");
             createCache(cm, com.esisalama.marissamayer.domain.Cours.class.getName());
             createCache(cm, com.esisalama.marissamayer.domain.Cours.class.getName() + ".evaluations");
             createCache(cm, com.esisalama.marissamayer.domain.Cours.class.getName() + ".creneaus");
+            createCache(cm, com.esisalama.marissamayer.domain.Cours.class.getName() + ".reservations");
+            createCache(cm, com.esisalama.marissamayer.domain.Cours.class.getName() + ".categories");
             createCache(cm, com.esisalama.marissamayer.domain.Paiement.class.getName());
             createCache(cm, com.esisalama.marissamayer.domain.Catalogue.class.getName());
             createCache(cm, com.esisalama.marissamayer.domain.Catalogue.class.getName() + ".cours");

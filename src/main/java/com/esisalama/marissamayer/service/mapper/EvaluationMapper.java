@@ -14,18 +14,16 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring")
 public interface EvaluationMapper extends EntityMapper<EvaluationDTO, Evaluation> {
     @Mapping(target = "cours", source = "cours", qualifiedByName = "coursId")
-    @Mapping(target = "utilisateur", source = "utilisateur", qualifiedByName = "utilisateurId")
+    @Mapping(target = "user", source = "user", qualifiedByName = "utilisateurId")
     EvaluationDTO toDto(Evaluation s);
 
     @Named("coursId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "nom", source = "nom")
     CoursDTO toDtoCoursId(Cours cours);
 
     @Named("utilisateurId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "email", source = "email")
     UtilisateurDTO toDtoUtilisateurId(Utilisateur utilisateur);
 }

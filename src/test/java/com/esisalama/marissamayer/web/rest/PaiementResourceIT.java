@@ -13,8 +13,6 @@ import com.esisalama.marissamayer.repository.PaiementRepository;
 import com.esisalama.marissamayer.service.dto.PaiementDTO;
 import com.esisalama.marissamayer.service.mapper.PaiementMapper;
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -38,9 +36,6 @@ class PaiementResourceIT {
 
     private static final BigDecimal DEFAULT_MONTANT = new BigDecimal(1);
     private static final BigDecimal UPDATED_MONTANT = new BigDecimal(2);
-
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String ENTITY_API_URL = "/api/paiements";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -69,7 +64,7 @@ class PaiementResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Paiement createEntity(EntityManager em) {
-        Paiement paiement = new Paiement().montant(DEFAULT_MONTANT).createdAt(DEFAULT_CREATED_AT);
+        Paiement paiement = new Paiement().montant(DEFAULT_MONTANT);
         // Add required entity
         Reservation reservation;
         if (TestUtil.findAll(em, Reservation.class).isEmpty()) {
@@ -90,7 +85,7 @@ class PaiementResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Paiement createUpdatedEntity(EntityManager em) {
-        Paiement paiement = new Paiement().montant(UPDATED_MONTANT).createdAt(UPDATED_CREATED_AT);
+        Paiement paiement = new Paiement().montant(UPDATED_MONTANT);
         // Add required entity
         Reservation reservation;
         if (TestUtil.findAll(em, Reservation.class).isEmpty()) {
@@ -124,7 +119,6 @@ class PaiementResourceIT {
         assertThat(paiementList).hasSize(databaseSizeBeforeCreate + 1);
         Paiement testPaiement = paiementList.get(paiementList.size() - 1);
         assertThat(testPaiement.getMontant()).isEqualByComparingTo(DEFAULT_MONTANT);
-        assertThat(testPaiement.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
     }
 
     @Test
@@ -166,24 +160,6 @@ class PaiementResourceIT {
 
     @Test
     @Transactional
-    void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = paiementRepository.findAll().size();
-        // set the field null
-        paiement.setCreatedAt(null);
-
-        // Create the Paiement, which fails.
-        PaiementDTO paiementDTO = paiementMapper.toDto(paiement);
-
-        restPaiementMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(paiementDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Paiement> paiementList = paiementRepository.findAll();
-        assertThat(paiementList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllPaiements() throws Exception {
         // Initialize the database
         paiementRepository.saveAndFlush(paiement);
@@ -194,8 +170,7 @@ class PaiementResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(paiement.getId().intValue())))
-            .andExpect(jsonPath("$.[*].montant").value(hasItem(sameNumber(DEFAULT_MONTANT))))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].montant").value(hasItem(sameNumber(DEFAULT_MONTANT))));
     }
 
     @Test
@@ -210,8 +185,7 @@ class PaiementResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(paiement.getId().intValue()))
-            .andExpect(jsonPath("$.montant").value(sameNumber(DEFAULT_MONTANT)))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.montant").value(sameNumber(DEFAULT_MONTANT)));
     }
 
     @Test
@@ -233,7 +207,7 @@ class PaiementResourceIT {
         Paiement updatedPaiement = paiementRepository.findById(paiement.getId()).get();
         // Disconnect from session so that the updates on updatedPaiement are not directly saved in db
         em.detach(updatedPaiement);
-        updatedPaiement.montant(UPDATED_MONTANT).createdAt(UPDATED_CREATED_AT);
+        updatedPaiement.montant(UPDATED_MONTANT);
         PaiementDTO paiementDTO = paiementMapper.toDto(updatedPaiement);
 
         restPaiementMockMvc
@@ -249,7 +223,6 @@ class PaiementResourceIT {
         assertThat(paiementList).hasSize(databaseSizeBeforeUpdate);
         Paiement testPaiement = paiementList.get(paiementList.size() - 1);
         assertThat(testPaiement.getMontant()).isEqualByComparingTo(UPDATED_MONTANT);
-        assertThat(testPaiement.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test
@@ -329,8 +302,6 @@ class PaiementResourceIT {
         Paiement partialUpdatedPaiement = new Paiement();
         partialUpdatedPaiement.setId(paiement.getId());
 
-        partialUpdatedPaiement.createdAt(UPDATED_CREATED_AT);
-
         restPaiementMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedPaiement.getId())
@@ -344,7 +315,6 @@ class PaiementResourceIT {
         assertThat(paiementList).hasSize(databaseSizeBeforeUpdate);
         Paiement testPaiement = paiementList.get(paiementList.size() - 1);
         assertThat(testPaiement.getMontant()).isEqualByComparingTo(DEFAULT_MONTANT);
-        assertThat(testPaiement.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test
@@ -359,7 +329,7 @@ class PaiementResourceIT {
         Paiement partialUpdatedPaiement = new Paiement();
         partialUpdatedPaiement.setId(paiement.getId());
 
-        partialUpdatedPaiement.montant(UPDATED_MONTANT).createdAt(UPDATED_CREATED_AT);
+        partialUpdatedPaiement.montant(UPDATED_MONTANT);
 
         restPaiementMockMvc
             .perform(
@@ -374,7 +344,6 @@ class PaiementResourceIT {
         assertThat(paiementList).hasSize(databaseSizeBeforeUpdate);
         Paiement testPaiement = paiementList.get(paiementList.size() - 1);
         assertThat(testPaiement.getMontant()).isEqualByComparingTo(UPDATED_MONTANT);
-        assertThat(testPaiement.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test

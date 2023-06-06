@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -64,7 +64,10 @@ export const Cours = () => {
                   <Translate contentKey="marissamayerApp.cours.prerequis">Prerequis</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="marissamayerApp.cours.createdAt">Created At</Translate>
+                  <Translate contentKey="marissamayerApp.cours.prix">Prix</Translate>
+                </th>
+                <th>
+                  <Translate contentKey="marissamayerApp.cours.categories">Categories</Translate>
                 </th>
                 <th>
                   <Translate contentKey="marissamayerApp.cours.catalogue">Catalogue</Translate>
@@ -82,10 +85,20 @@ export const Cours = () => {
                   </td>
                   <td>{cours.nom}</td>
                   <td>{cours.description}</td>
-                  <td><b>{cours.duree}</b> Heures</td>
+                  <td>{cours.duree}</td>
                   <td>{cours.prerequis}</td>
-                  <td>{cours.createdAt ? <TextFormat type="date" value={cours.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{cours.catalogue ? <Link to={`/catalogue/${cours.catalogue.id}`}>{cours.catalogue.nom}</Link> : ''}</td>
+                  <td>{cours.prix}</td>
+                  <td>
+                    {cours.categories
+                      ? cours.categories.map((val, j) => (
+                          <span key={j}>
+                            <Link to={`/categorie/${val.id}`}>{val.id}</Link>
+                            {j === cours.categories.length - 1 ? '' : ', '}
+                          </span>
+                        ))
+                      : null}
+                  </td>
+                  <td>{cours.catalogue ? <Link to={`/catalogue/${cours.catalogue.id}`}>{cours.catalogue.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/cours/${cours.id}`} color="info" size="sm" data-cy="entityDetailsButton">

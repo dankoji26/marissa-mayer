@@ -1,9 +1,7 @@
 package com.esisalama.marissamayer.domain;
 
-import com.esisalama.marissamayer.domain.enumeration.Role;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -28,49 +26,24 @@ public class Utilisateur implements Serializable {
     @Column(name = "id")
     private Long id;
 
+    @OneToOne(optional = false)
     @NotNull
-    @Column(name = "nom", nullable = false)
-    private String nom;
+    @JoinColumn(unique = true)
+    private User instance;
 
-    @NotNull
-    @Column(name = "prenom", nullable = false)
-    private String prenom;
-
-    @NotNull
-    @Column(name = "email", nullable = false)
-    private String email;
-
-    @NotNull
-    @Column(name = "password", nullable = false)
-    private String password;
-
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private Role role;
-
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "utilisateur" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "cours" }, allowSetters = true)
     private Set<Reservation> reservations = new HashSet<>();
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "cours", "utilisateur" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "user" }, allowSetters = true)
     private Set<Evaluation> evaluations = new HashSet<>();
 
-    @OneToMany(mappedBy = "utilisateur")
+    @OneToMany(mappedBy = "user")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "utilisateur" }, allowSetters = true)
-    private Set<Notification> notifications = new HashSet<>();
-
-    @OneToMany(mappedBy = "utilisateur")
-    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "cours", "utilisateur" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "user" }, allowSetters = true)
     private Set<Creneau> creneaus = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -88,82 +61,17 @@ public class Utilisateur implements Serializable {
         this.id = id;
     }
 
-    public String getNom() {
-        return this.nom;
+    public User getInstance() {
+        return this.instance;
     }
 
-    public Utilisateur nom(String nom) {
-        this.setNom(nom);
+    public void setInstance(User user) {
+        this.instance = user;
+    }
+
+    public Utilisateur instance(User user) {
+        this.setInstance(user);
         return this;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return this.prenom;
-    }
-
-    public Utilisateur prenom(String prenom) {
-        this.setPrenom(prenom);
-        return this;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public Utilisateur email(String email) {
-        this.setEmail(email);
-        return this;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public Utilisateur password(String password) {
-        this.setPassword(password);
-        return this;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Instant getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public Utilisateur createdAt(Instant createdAt) {
-        this.setCreatedAt(createdAt);
-        return this;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Role getRole() {
-        return this.role;
-    }
-
-    public Utilisateur role(Role role) {
-        this.setRole(role);
-        return this;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 
     public Set<Reservation> getReservations() {
@@ -172,10 +80,10 @@ public class Utilisateur implements Serializable {
 
     public void setReservations(Set<Reservation> reservations) {
         if (this.reservations != null) {
-            this.reservations.forEach(i -> i.setUtilisateur(null));
+            this.reservations.forEach(i -> i.setUser(null));
         }
         if (reservations != null) {
-            reservations.forEach(i -> i.setUtilisateur(this));
+            reservations.forEach(i -> i.setUser(this));
         }
         this.reservations = reservations;
     }
@@ -187,13 +95,13 @@ public class Utilisateur implements Serializable {
 
     public Utilisateur addReservation(Reservation reservation) {
         this.reservations.add(reservation);
-        reservation.setUtilisateur(this);
+        reservation.setUser(this);
         return this;
     }
 
     public Utilisateur removeReservation(Reservation reservation) {
         this.reservations.remove(reservation);
-        reservation.setUtilisateur(null);
+        reservation.setUser(null);
         return this;
     }
 
@@ -203,10 +111,10 @@ public class Utilisateur implements Serializable {
 
     public void setEvaluations(Set<Evaluation> evaluations) {
         if (this.evaluations != null) {
-            this.evaluations.forEach(i -> i.setUtilisateur(null));
+            this.evaluations.forEach(i -> i.setUser(null));
         }
         if (evaluations != null) {
-            evaluations.forEach(i -> i.setUtilisateur(this));
+            evaluations.forEach(i -> i.setUser(this));
         }
         this.evaluations = evaluations;
     }
@@ -218,44 +126,13 @@ public class Utilisateur implements Serializable {
 
     public Utilisateur addEvaluation(Evaluation evaluation) {
         this.evaluations.add(evaluation);
-        evaluation.setUtilisateur(this);
+        evaluation.setUser(this);
         return this;
     }
 
     public Utilisateur removeEvaluation(Evaluation evaluation) {
         this.evaluations.remove(evaluation);
-        evaluation.setUtilisateur(null);
-        return this;
-    }
-
-    public Set<Notification> getNotifications() {
-        return this.notifications;
-    }
-
-    public void setNotifications(Set<Notification> notifications) {
-        if (this.notifications != null) {
-            this.notifications.forEach(i -> i.setUtilisateur(null));
-        }
-        if (notifications != null) {
-            notifications.forEach(i -> i.setUtilisateur(this));
-        }
-        this.notifications = notifications;
-    }
-
-    public Utilisateur notifications(Set<Notification> notifications) {
-        this.setNotifications(notifications);
-        return this;
-    }
-
-    public Utilisateur addNotification(Notification notification) {
-        this.notifications.add(notification);
-        notification.setUtilisateur(this);
-        return this;
-    }
-
-    public Utilisateur removeNotification(Notification notification) {
-        this.notifications.remove(notification);
-        notification.setUtilisateur(null);
+        evaluation.setUser(null);
         return this;
     }
 
@@ -265,10 +142,10 @@ public class Utilisateur implements Serializable {
 
     public void setCreneaus(Set<Creneau> creneaus) {
         if (this.creneaus != null) {
-            this.creneaus.forEach(i -> i.setUtilisateur(null));
+            this.creneaus.forEach(i -> i.setUser(null));
         }
         if (creneaus != null) {
-            creneaus.forEach(i -> i.setUtilisateur(this));
+            creneaus.forEach(i -> i.setUser(this));
         }
         this.creneaus = creneaus;
     }
@@ -280,13 +157,13 @@ public class Utilisateur implements Serializable {
 
     public Utilisateur addCreneau(Creneau creneau) {
         this.creneaus.add(creneau);
-        creneau.setUtilisateur(this);
+        creneau.setUser(this);
         return this;
     }
 
     public Utilisateur removeCreneau(Creneau creneau) {
         this.creneaus.remove(creneau);
-        creneau.setUtilisateur(null);
+        creneau.setUser(null);
         return this;
     }
 
@@ -314,12 +191,6 @@ public class Utilisateur implements Serializable {
     public String toString() {
         return "Utilisateur{" +
             "id=" + getId() +
-            ", nom='" + getNom() + "'" +
-            ", prenom='" + getPrenom() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", role='" + getRole() + "'" +
             "}";
     }
 }

@@ -2,7 +2,6 @@ package com.esisalama.marissamayer.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -41,23 +40,37 @@ public class Cours implements Serializable {
     @Column(name = "prerequis")
     private String prerequis;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    @Column(name = "prix")
+    private Long prix;
 
     @OneToMany(mappedBy = "cours")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "cours", "utilisateur" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "user" }, allowSetters = true)
     private Set<Evaluation> evaluations = new HashSet<>();
 
     @OneToMany(mappedBy = "cours")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "cours", "utilisateur" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "cours", "user" }, allowSetters = true)
     private Set<Creneau> creneaus = new HashSet<>();
+
+    @OneToMany(mappedBy = "cours")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "user", "cours" }, allowSetters = true)
+    private Set<Reservation> reservations = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_cours__categories",
+        joinColumns = @JoinColumn(name = "cours_id"),
+        inverseJoinColumns = @JoinColumn(name = "categories_id")
+    )
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "cours" }, allowSetters = true)
+    private Set<Categorie> categories = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "utilisateur", "cours" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "cours" }, allowSetters = true)
     private Catalogue catalogue;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -127,17 +140,17 @@ public class Cours implements Serializable {
         this.prerequis = prerequis;
     }
 
-    public Instant getCreatedAt() {
-        return this.createdAt;
+    public Long getPrix() {
+        return this.prix;
     }
 
-    public Cours createdAt(Instant createdAt) {
-        this.setCreatedAt(createdAt);
+    public Cours prix(Long prix) {
+        this.setPrix(prix);
         return this;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setPrix(Long prix) {
+        this.prix = prix;
     }
 
     public Set<Evaluation> getEvaluations() {
@@ -202,6 +215,62 @@ public class Cours implements Serializable {
         return this;
     }
 
+    public Set<Reservation> getReservations() {
+        return this.reservations;
+    }
+
+    public void setReservations(Set<Reservation> reservations) {
+        if (this.reservations != null) {
+            this.reservations.forEach(i -> i.setCours(null));
+        }
+        if (reservations != null) {
+            reservations.forEach(i -> i.setCours(this));
+        }
+        this.reservations = reservations;
+    }
+
+    public Cours reservations(Set<Reservation> reservations) {
+        this.setReservations(reservations);
+        return this;
+    }
+
+    public Cours addReservation(Reservation reservation) {
+        this.reservations.add(reservation);
+        reservation.setCours(this);
+        return this;
+    }
+
+    public Cours removeReservation(Reservation reservation) {
+        this.reservations.remove(reservation);
+        reservation.setCours(null);
+        return this;
+    }
+
+    public Set<Categorie> getCategories() {
+        return this.categories;
+    }
+
+    public void setCategories(Set<Categorie> categories) {
+        this.categories = categories;
+    }
+
+    public Cours categories(Set<Categorie> categories) {
+        this.setCategories(categories);
+        return this;
+    }
+
+    public Cours addCategories(Categorie categorie) {
+        this.categories.add(categorie);
+        categorie.getCours().add(this);
+        return this;
+    }
+
+    public Cours removeCategories(Categorie categorie) {
+        this.categories.remove(categorie);
+        categorie.getCours().remove(this);
+        return this;
+    }
+
     public Catalogue getCatalogue() {
         return this.catalogue;
     }
@@ -243,7 +312,7 @@ public class Cours implements Serializable {
             ", description='" + getDescription() + "'" +
             ", duree=" + getDuree() +
             ", prerequis='" + getPrerequis() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
+            ", prix=" + getPrix() +
             "}";
     }
 }

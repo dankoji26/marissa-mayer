@@ -8,8 +8,9 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { IUser } from 'app/shared/model/user.model';
+import { getUsers } from 'app/modules/administration/user-management/user-management.reducer';
 import { IUtilisateur } from 'app/shared/model/utilisateur.model';
-import { Role } from 'app/shared/model/enumerations/role.model';
 import { getEntity, updateEntity, createEntity, reset } from './utilisateur.reducer';
 
 export const UtilisateurUpdate = () => {
@@ -20,11 +21,11 @@ export const UtilisateurUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const users = useAppSelector(state => state.userManagement.users);
   const utilisateurEntity = useAppSelector(state => state.utilisateur.entity);
   const loading = useAppSelector(state => state.utilisateur.loading);
   const updating = useAppSelector(state => state.utilisateur.updating);
   const updateSuccess = useAppSelector(state => state.utilisateur.updateSuccess);
-  const roleValues = Object.keys(Role);
 
   const handleClose = () => {
     navigate('/utilisateur');
@@ -36,6 +37,8 @@ export const UtilisateurUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getUsers({}));
   }, []);
 
   useEffect(() => {
@@ -45,11 +48,10 @@ export const UtilisateurUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.createdAt = convertDateTimeToServer(values.createdAt);
-
     const entity = {
       ...utilisateurEntity,
       ...values,
+      instance: users.find(it => it.id.toString() === values.instance.toString()),
     };
 
     if (isNew) {
@@ -61,13 +63,10 @@ export const UtilisateurUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {
-          createdAt: displayDefaultDateTime(),
-        }
+      ? {}
       : {
-          role: 'PRESTATAIRE',
           ...utilisateurEntity,
-          createdAt: convertDateTimeFromServer(utilisateurEntity.createdAt),
+          instance: utilisateurEntity?.instance?.id,
         };
 
   return (
@@ -96,69 +95,25 @@ export const UtilisateurUpdate = () => {
                 />
               ) : null}
               <ValidatedField
-                label={translate('marissamayerApp.utilisateur.nom')}
-                id="utilisateur-nom"
-                name="nom"
-                data-cy="nom"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('marissamayerApp.utilisateur.prenom')}
-                id="utilisateur-prenom"
-                name="prenom"
-                data-cy="prenom"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('marissamayerApp.utilisateur.email')}
-                id="utilisateur-email"
-                name="email"
-                data-cy="email"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('marissamayerApp.utilisateur.password')}
-                id="utilisateur-password"
-                name="password"
-                data-cy="password"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('marissamayerApp.utilisateur.createdAt')}
-                id="utilisateur-createdAt"
-                name="createdAt"
-                data-cy="createdAt"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('marissamayerApp.utilisateur.role')}
-                id="utilisateur-role"
-                name="role"
-                data-cy="role"
+                id="utilisateur-instance"
+                name="instance"
+                data-cy="instance"
+                label={translate('marissamayerApp.utilisateur.instance')}
                 type="select"
+                required
               >
-                {roleValues.map(role => (
-                  <option value={role} key={role}>
-                    {translate('marissamayerApp.Role.' + role)}
-                  </option>
-                ))}
+                <option value="" key="0" />
+                {users
+                  ? users.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
               </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/utilisateur" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

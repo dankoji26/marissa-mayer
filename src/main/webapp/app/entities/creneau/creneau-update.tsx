@@ -60,7 +60,7 @@ export const CreneauUpdate = () => {
       ...creneauEntity,
       ...values,
       cours: cours.find(it => it.id.toString() === values.cours.toString()),
-      utilisateur: utilisateurs.find(it => it.id.toString() === values.utilisateur.toString()),
+      user: utilisateurs.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -78,7 +78,7 @@ export const CreneauUpdate = () => {
           statuts: 'LIBRE',
           ...creneauEntity,
           cours: creneauEntity?.cours?.id,
-          utilisateur: creneauEntity?.utilisateur?.id,
+          user: creneauEntity?.user?.id,
         };
 
   return (
@@ -164,7 +164,7 @@ export const CreneauUpdate = () => {
                 {cours
                   ? cours.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nom}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}
@@ -173,10 +173,10 @@ export const CreneauUpdate = () => {
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
               <ValidatedField
-                id="creneau-utilisateur"
-                name="utilisateur"
-                data-cy="utilisateur"
-                label={translate('marissamayerApp.creneau.utilisateur')}
+                id="creneau-user"
+                name="user"
+                data-cy="user"
+                label={translate('marissamayerApp.creneau.user')}
                 type="select"
                 required
               >
@@ -184,7 +184,7 @@ export const CreneauUpdate = () => {
                 {utilisateurs
                   ? utilisateurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.email}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

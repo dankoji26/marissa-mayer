@@ -45,13 +45,13 @@ public class Creneau implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "evaluations", "creneaus", "catalogue" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evaluations", "creneaus", "reservations", "categories", "catalogue" }, allowSetters = true)
     private Cours cours;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "reservations", "evaluations", "notifications", "creneaus" }, allowSetters = true)
-    private Utilisateur utilisateur;
+    @JsonIgnoreProperties(value = { "instance", "reservations", "evaluations", "creneaus" }, allowSetters = true)
+    private Utilisateur user;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -133,16 +133,16 @@ public class Creneau implements Serializable {
         return this;
     }
 
-    public Utilisateur getUtilisateur() {
-        return this.utilisateur;
+    public Utilisateur getUser() {
+        return this.user;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setUser(Utilisateur utilisateur) {
+        this.user = utilisateur;
     }
 
-    public Creneau utilisateur(Utilisateur utilisateur) {
-        this.setUtilisateur(utilisateur);
+    public Creneau user(Utilisateur utilisateur) {
+        this.setUser(utilisateur);
         return this;
     }
 

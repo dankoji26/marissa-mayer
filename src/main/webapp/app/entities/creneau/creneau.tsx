@@ -67,7 +67,7 @@ export const Creneau = () => {
                   <Translate contentKey="marissamayerApp.creneau.cours">Cours</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="marissamayerApp.creneau.utilisateur">Utilisateur</Translate>
+                  <Translate contentKey="marissamayerApp.creneau.user">User</Translate>
                 </th>
                 <th />
               </tr>
@@ -88,8 +88,8 @@ export const Creneau = () => {
                   <td>
                     <Translate contentKey={`marissamayerApp.CreneauStatuts.${creneau.statuts}`} />
                   </td>
-                  <td>{creneau.cours ? <Link to={`/cours/${creneau.cours.id}`}>{creneau.cours.nom}</Link> : ''}</td>
-                  <td>{creneau.utilisateur ? <Link to={`/utilisateur/${creneau.utilisateur.id}`}>{creneau.utilisateur.email}</Link> : ''}</td>
+                  <td>{creneau.cours ? <Link to={`/cours/${creneau.cours.id}`}>{creneau.cours.id}</Link> : ''}</td>
+                  <td>{creneau.user ? <Link to={`/utilisateur/${creneau.user.id}`}>{creneau.user.id}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/creneau/${creneau.id}`} color="info" size="sm" data-cy="entityDetailsButton">

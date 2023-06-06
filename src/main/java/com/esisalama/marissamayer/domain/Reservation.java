@@ -35,14 +35,15 @@ public class Reservation implements Serializable {
     @Column(name = "date", nullable = false)
     private Instant date;
 
+    @ManyToOne(optional = false)
     @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    @JsonIgnoreProperties(value = { "instance", "reservations", "evaluations", "creneaus" }, allowSetters = true)
+    private Utilisateur user;
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "reservations", "evaluations", "notifications", "creneaus" }, allowSetters = true)
-    private Utilisateur utilisateur;
+    @JsonIgnoreProperties(value = { "evaluations", "creneaus", "reservations", "categories", "catalogue" }, allowSetters = true)
+    private Cours cours;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -85,29 +86,29 @@ public class Reservation implements Serializable {
         this.date = date;
     }
 
-    public Instant getCreatedAt() {
-        return this.createdAt;
+    public Utilisateur getUser() {
+        return this.user;
     }
 
-    public Reservation createdAt(Instant createdAt) {
-        this.setCreatedAt(createdAt);
+    public void setUser(Utilisateur utilisateur) {
+        this.user = utilisateur;
+    }
+
+    public Reservation user(Utilisateur utilisateur) {
+        this.setUser(utilisateur);
         return this;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public Cours getCours() {
+        return this.cours;
     }
 
-    public Utilisateur getUtilisateur() {
-        return this.utilisateur;
+    public void setCours(Cours cours) {
+        this.cours = cours;
     }
 
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
-
-    public Reservation utilisateur(Utilisateur utilisateur) {
-        this.setUtilisateur(utilisateur);
+    public Reservation cours(Cours cours) {
+        this.setCours(cours);
         return this;
     }
 
@@ -137,7 +138,6 @@ public class Reservation implements Serializable {
             "id=" + getId() +
             ", statuts='" + getStatuts() + "'" +
             ", date='" + getDate() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }
 }

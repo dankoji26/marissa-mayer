@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -33,43 +33,9 @@ export const UtilisateurDetail = () => {
           </dt>
           <dd>{utilisateurEntity.id}</dd>
           <dt>
-            <span id="nom">
-              <Translate contentKey="marissamayerApp.utilisateur.nom">Nom</Translate>
-            </span>
+            <Translate contentKey="marissamayerApp.utilisateur.instance">Instance</Translate>
           </dt>
-          <dd>{utilisateurEntity.nom}</dd>
-          <dt>
-            <span id="prenom">
-              <Translate contentKey="marissamayerApp.utilisateur.prenom">Prenom</Translate>
-            </span>
-          </dt>
-          <dd>{utilisateurEntity.prenom}</dd>
-          <dt>
-            <span id="email">
-              <Translate contentKey="marissamayerApp.utilisateur.email">Email</Translate>
-            </span>
-          </dt>
-          <dd>{utilisateurEntity.email}</dd>
-          <dt>
-            <span id="password">
-              <Translate contentKey="marissamayerApp.utilisateur.password">Password</Translate>
-            </span>
-          </dt>
-          <dd>{utilisateurEntity.password}</dd>
-          <dt>
-            <span id="createdAt">
-              <Translate contentKey="marissamayerApp.utilisateur.createdAt">Created At</Translate>
-            </span>
-          </dt>
-          <dd>
-            {utilisateurEntity.createdAt ? <TextFormat value={utilisateurEntity.createdAt} type="date" format={APP_DATE_FORMAT} /> : null}
-          </dd>
-          <dt>
-            <span id="role">
-              <Translate contentKey="marissamayerApp.utilisateur.role">Role</Translate>
-            </span>
-          </dt>
-          <dd>{utilisateurEntity.role}</dd>
+          <dd>{utilisateurEntity.instance ? utilisateurEntity.instance.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/utilisateur" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

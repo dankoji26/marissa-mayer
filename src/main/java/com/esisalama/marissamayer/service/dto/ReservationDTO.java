@@ -20,10 +20,9 @@ public class ReservationDTO implements Serializable {
     @NotNull
     private Instant date;
 
-    @NotNull
-    private Instant createdAt;
+    private UtilisateurDTO user;
 
-    private UtilisateurDTO utilisateur;
+    private CoursDTO cours;
 
     public Long getId() {
         return id;
@@ -49,20 +48,20 @@ public class ReservationDTO implements Serializable {
         this.date = date;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public UtilisateurDTO getUser() {
+        return user;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public void setUser(UtilisateurDTO user) {
+        this.user = user;
     }
 
-    public UtilisateurDTO getUtilisateur() {
-        return utilisateur;
+    public CoursDTO getCours() {
+        return cours;
     }
 
-    public void setUtilisateur(UtilisateurDTO utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setCours(CoursDTO cours) {
+        this.cours = cours;
     }
 
     @Override
@@ -93,8 +92,8 @@ public class ReservationDTO implements Serializable {
             "id=" + getId() +
             ", statuts='" + getStatuts() + "'" +
             ", date='" + getDate() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", utilisateur=" + getUtilisateur() +
+            ", user=" + getUser() +
+            ", cours=" + getCours() +
             "}";
     }
 }

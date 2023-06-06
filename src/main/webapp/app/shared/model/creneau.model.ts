@@ -10,7 +10,7 @@ export interface ICreneau {
   heureFin?: string | null;
   statuts?: CreneauStatuts;
   cours?: ICours;
-  utilisateur?: IUtilisateur;
+  user?: IUtilisateur;
 }
 
 export const defaultValue: Readonly<ICreneau> = {};

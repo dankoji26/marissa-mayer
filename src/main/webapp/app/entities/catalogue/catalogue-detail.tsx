@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -39,17 +39,9 @@ export const CatalogueDetail = () => {
           </dt>
           <dd>{catalogueEntity.nom}</dd>
           <dt>
-            <span id="createdAt">
-              <Translate contentKey="marissamayerApp.catalogue.createdAt">Created At</Translate>
-            </span>
+            <Translate contentKey="marissamayerApp.catalogue.user">User</Translate>
           </dt>
-          <dd>
-            {catalogueEntity.createdAt ? <TextFormat value={catalogueEntity.createdAt} type="date" format={APP_DATE_FORMAT} /> : null}
-          </dd>
-          <dt>
-            <Translate contentKey="marissamayerApp.catalogue.utilisateur">Utilisateur</Translate>
-          </dt>
-          <dd>{catalogueEntity.utilisateur ? catalogueEntity.utilisateur.email : ''}</dd>
+          <dd>{catalogueEntity.user ? catalogueEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/catalogue" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

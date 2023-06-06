@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.esisalama.marissamayer.IntegrationTest;
+import com.esisalama.marissamayer.domain.Cours;
 import com.esisalama.marissamayer.domain.Reservation;
 import com.esisalama.marissamayer.domain.Utilisateur;
 import com.esisalama.marissamayer.domain.enumeration.ReservationStatuts;
@@ -41,9 +42,6 @@ class ReservationResourceIT {
     private static final Instant DEFAULT_DATE = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_DATE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
     private static final String ENTITY_API_URL = "/api/reservations";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -71,7 +69,7 @@ class ReservationResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Reservation createEntity(EntityManager em) {
-        Reservation reservation = new Reservation().statuts(DEFAULT_STATUTS).date(DEFAULT_DATE).createdAt(DEFAULT_CREATED_AT);
+        Reservation reservation = new Reservation().statuts(DEFAULT_STATUTS).date(DEFAULT_DATE);
         // Add required entity
         Utilisateur utilisateur;
         if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
@@ -81,7 +79,17 @@ class ReservationResourceIT {
         } else {
             utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
         }
-        reservation.setUtilisateur(utilisateur);
+        reservation.setUser(utilisateur);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        reservation.setCours(cours);
         return reservation;
     }
 
@@ -92,7 +100,7 @@ class ReservationResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Reservation createUpdatedEntity(EntityManager em) {
-        Reservation reservation = new Reservation().statuts(UPDATED_STATUTS).date(UPDATED_DATE).createdAt(UPDATED_CREATED_AT);
+        Reservation reservation = new Reservation().statuts(UPDATED_STATUTS).date(UPDATED_DATE);
         // Add required entity
         Utilisateur utilisateur;
         if (TestUtil.findAll(em, Utilisateur.class).isEmpty()) {
@@ -102,7 +110,17 @@ class ReservationResourceIT {
         } else {
             utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
         }
-        reservation.setUtilisateur(utilisateur);
+        reservation.setUser(utilisateur);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createUpdatedEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        reservation.setCours(cours);
         return reservation;
     }
 
@@ -129,7 +147,6 @@ class ReservationResourceIT {
         Reservation testReservation = reservationList.get(reservationList.size() - 1);
         assertThat(testReservation.getStatuts()).isEqualTo(DEFAULT_STATUTS);
         assertThat(testReservation.getDate()).isEqualTo(DEFAULT_DATE);
-        assertThat(testReservation.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
     }
 
     @Test
@@ -195,26 +212,6 @@ class ReservationResourceIT {
 
     @Test
     @Transactional
-    void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = reservationRepository.findAll().size();
-        // set the field null
-        reservation.setCreatedAt(null);
-
-        // Create the Reservation, which fails.
-        ReservationDTO reservationDTO = reservationMapper.toDto(reservation);
-
-        restReservationMockMvc
-            .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(reservationDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<Reservation> reservationList = reservationRepository.findAll();
-        assertThat(reservationList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllReservations() throws Exception {
         // Initialize the database
         reservationRepository.saveAndFlush(reservation);
@@ -226,8 +223,7 @@ class ReservationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(reservation.getId().intValue())))
             .andExpect(jsonPath("$.[*].statuts").value(hasItem(DEFAULT_STATUTS.toString())))
-            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].date").value(hasItem(DEFAULT_DATE.toString())));
     }
 
     @Test
@@ -243,8 +239,7 @@ class ReservationResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(reservation.getId().intValue()))
             .andExpect(jsonPath("$.statuts").value(DEFAULT_STATUTS.toString()))
-            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.date").value(DEFAULT_DATE.toString()));
     }
 
     @Test
@@ -266,7 +261,7 @@ class ReservationResourceIT {
         Reservation updatedReservation = reservationRepository.findById(reservation.getId()).get();
         // Disconnect from session so that the updates on updatedReservation are not directly saved in db
         em.detach(updatedReservation);
-        updatedReservation.statuts(UPDATED_STATUTS).date(UPDATED_DATE).createdAt(UPDATED_CREATED_AT);
+        updatedReservation.statuts(UPDATED_STATUTS).date(UPDATED_DATE);
         ReservationDTO reservationDTO = reservationMapper.toDto(updatedReservation);
 
         restReservationMockMvc
@@ -283,7 +278,6 @@ class ReservationResourceIT {
         Reservation testReservation = reservationList.get(reservationList.size() - 1);
         assertThat(testReservation.getStatuts()).isEqualTo(UPDATED_STATUTS);
         assertThat(testReservation.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testReservation.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test
@@ -363,8 +357,6 @@ class ReservationResourceIT {
         Reservation partialUpdatedReservation = new Reservation();
         partialUpdatedReservation.setId(reservation.getId());
 
-        partialUpdatedReservation.createdAt(UPDATED_CREATED_AT);
-
         restReservationMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedReservation.getId())
@@ -379,7 +371,6 @@ class ReservationResourceIT {
         Reservation testReservation = reservationList.get(reservationList.size() - 1);
         assertThat(testReservation.getStatuts()).isEqualTo(DEFAULT_STATUTS);
         assertThat(testReservation.getDate()).isEqualTo(DEFAULT_DATE);
-        assertThat(testReservation.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test
@@ -394,7 +385,7 @@ class ReservationResourceIT {
         Reservation partialUpdatedReservation = new Reservation();
         partialUpdatedReservation.setId(reservation.getId());
 
-        partialUpdatedReservation.statuts(UPDATED_STATUTS).date(UPDATED_DATE).createdAt(UPDATED_CREATED_AT);
+        partialUpdatedReservation.statuts(UPDATED_STATUTS).date(UPDATED_DATE);
 
         restReservationMockMvc
             .perform(
@@ -410,7 +401,6 @@ class ReservationResourceIT {
         Reservation testReservation = reservationList.get(reservationList.size() - 1);
         assertThat(testReservation.getStatuts()).isEqualTo(UPDATED_STATUTS);
         assertThat(testReservation.getDate()).isEqualTo(UPDATED_DATE);
-        assertThat(testReservation.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test

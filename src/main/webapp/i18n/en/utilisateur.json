@@ -18,15 +18,9 @@
         "title": "Utilisateur"
       },
       "id": "ID",
-      "nom": "Nom",
-      "prenom": "Prenom",
-      "email": "Email",
-      "password": "Password",
-      "createdAt": "Created At",
-      "role": "Role",
+      "instance": "Instance",
       "reservation": "Reservation",
       "evaluation": "Evaluation",
-      "notification": "Notification",
       "creneau": "Creneau"
     }
   }

@@ -48,8 +48,6 @@ export const PaiementUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.createdAt = convertDateTimeToServer(values.createdAt);
-
     const entity = {
       ...paiementEntity,
       ...values,
@@ -65,12 +63,9 @@ export const PaiementUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {
-          createdAt: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...paiementEntity,
-          createdAt: convertDateTimeFromServer(paiementEntity.createdAt),
           reservation: paiementEntity?.reservation?.id,
         };
 
@@ -108,17 +103,6 @@ export const PaiementUpdate = () => {
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                   validate: v => isNumber(v) || translate('entity.validation.number'),
-                }}
-              />
-              <ValidatedField
-                label={translate('marissamayerApp.paiement.createdAt')}
-                id="paiement-createdAt"
-                name="createdAt"
-                data-cy="createdAt"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
                 }}
               />
               <ValidatedField
