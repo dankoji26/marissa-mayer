@@ -4,13 +4,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
     <!--
-        Added the constraints for entity Catalogue.
+        Added the constraints for entity Utilisateur.
     -->
-    <changeSet id="20230531073306-2" author="jhipster">
+    <changeSet id="20230531072806-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="user_id"
-                                 baseTableName="catalogue"
-                                 constraintName="fk_catalogue__user_id"
+        <addForeignKeyConstraint baseColumnNames="instance_id"
+                                 baseTableName="utilisateur"
+                                 constraintName="fk_utilisateur__instance_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
     </changeSet>

@@ -20,16 +20,15 @@
             <column name="date" type="${datetimeType}">
                 <constraints nullable="false" />
             </column>
-            <column name="created_at" type="${datetimeType}">
+            <column name="user_id" type="bigint">
                 <constraints nullable="false" />
             </column>
-            <column name="utilisateur_id" type="bigint">
+            <column name="cours_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="reservation" columnName="date" columnDataType="${datetimeType}"/>
-        <dropDefaultValue tableName="reservation" columnName="created_at" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -51,8 +50,8 @@
             <column name="id" type="numeric"/>
             <column name="statuts" type="string"/>
             <column name="date" type="date"/>
-            <column name="created_at" type="date"/>
-            <column name="utilisateur_id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
+            <column name="cours_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

@@ -19,7 +19,6 @@
       },
       "id": "ID",
       "montant": "Montant",
-      "createdAt": "Created At",
       "reservation": "Reservation"
     }
   }

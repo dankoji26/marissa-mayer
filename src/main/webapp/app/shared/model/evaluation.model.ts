@@ -7,7 +7,7 @@ export interface IEvaluation {
   commentaire?: string;
   createdAt?: string;
   cours?: ICours;
-  utilisateur?: IUtilisateur;
+  user?: IUtilisateur;
 }
 
 export const defaultValue: Readonly<IEvaluation> = {};

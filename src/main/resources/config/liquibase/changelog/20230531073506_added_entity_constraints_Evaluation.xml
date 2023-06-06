@@ -14,9 +14,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="cours"/>
 
-        <addForeignKeyConstraint baseColumnNames="utilisateur_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="evaluation"
-                                 constraintName="fk_evaluation__utilisateur_id"
+                                 constraintName="fk_evaluation__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="utilisateur"/>
     </changeSet>

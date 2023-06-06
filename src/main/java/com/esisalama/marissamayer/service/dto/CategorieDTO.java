@@ -1,7 +1,6 @@
 package com.esisalama.marissamayer.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -15,9 +14,6 @@ public class CategorieDTO implements Serializable {
 
     @NotNull
     private String nom;
-
-    @NotNull
-    private Instant createdAt;
 
     public Long getId() {
         return id;
@@ -33,14 +29,6 @@ public class CategorieDTO implements Serializable {
 
     public void setNom(String nom) {
         this.nom = nom;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
     }
 
     @Override
@@ -70,7 +58,6 @@ public class CategorieDTO implements Serializable {
         return "CategorieDTO{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }
 }

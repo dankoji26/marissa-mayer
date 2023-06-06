@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { ICategorie } from 'app/shared/model/categorie.model';
+import { getEntities as getCategories } from 'app/entities/categorie/categorie.reducer';
 import { ICatalogue } from 'app/shared/model/catalogue.model';
 import { getEntities as getCatalogues } from 'app/entities/catalogue/catalogue.reducer';
 import { ICours } from 'app/shared/model/cours.model';
@@ -21,6 +23,7 @@ export const CoursUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const categories = useAppSelector(state => state.categorie.entities);
   const catalogues = useAppSelector(state => state.catalogue.entities);
   const coursEntity = useAppSelector(state => state.cours.entity);
   const loading = useAppSelector(state => state.cours.loading);
@@ -38,6 +41,7 @@ export const CoursUpdate = () => {
       dispatch(getEntity(id));
     }
 
+    dispatch(getCategories({}));
     dispatch(getCatalogues({}));
   }, []);
 
@@ -48,11 +52,10 @@ export const CoursUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.createdAt = convertDateTimeToServer(values.createdAt);
-
     const entity = {
       ...coursEntity,
       ...values,
+      categories: mapIdList(values.categories),
       catalogue: catalogues.find(it => it.id.toString() === values.catalogue.toString()),
     };
 
@@ -65,12 +68,10 @@ export const CoursUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {
-          createdAt: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...coursEntity,
-          createdAt: convertDateTimeFromServer(coursEntity.createdAt),
+          categories: coursEntity?.categories?.map(e => e.id.toString()),
           catalogue: coursEntity?.catalogue?.id,
         };
 
@@ -127,17 +128,24 @@ export const CoursUpdate = () => {
                 data-cy="prerequis"
                 type="text"
               />
+              <ValidatedField label={translate('marissamayerApp.cours.prix')} id="cours-prix" name="prix" data-cy="prix" type="text" />
               <ValidatedField
-                label={translate('marissamayerApp.cours.createdAt')}
-                id="cours-createdAt"
-                name="createdAt"
-                data-cy="createdAt"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
+                label={translate('marissamayerApp.cours.categories')}
+                id="cours-categories"
+                data-cy="categories"
+                type="select"
+                multiple
+                name="categories"
+              >
+                <option value="" key="0" />
+                {categories
+                  ? categories.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
               <ValidatedField
                 id="cours-catalogue"
                 name="catalogue"
@@ -150,7 +158,7 @@ export const CoursUpdate = () => {
                 {catalogues
                   ? catalogues.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nom}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

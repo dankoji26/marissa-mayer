@@ -27,6 +27,7 @@
     <include file="config/liquibase/changelog/20230531073506_added_entity_Evaluation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230531073606_added_entity_Creneau.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20230531072806_added_entity_constraints_Utilisateur.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230531072906_added_entity_constraints_Reservation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230531073106_added_entity_constraints_Cours.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20230531073206_added_entity_constraints_Paiement.xml" relativeToChangelogFile="false"/>

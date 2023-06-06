@@ -3,7 +3,6 @@ package com.esisalama.marissamayer.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -30,11 +29,7 @@ public class Paiement implements Serializable {
     @Column(name = "montant", precision = 21, scale = 2, nullable = false)
     private BigDecimal montant;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-    @JsonIgnoreProperties(value = { "utilisateur" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "user", "cours" }, allowSetters = true)
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
@@ -66,19 +61,6 @@ public class Paiement implements Serializable {
 
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
-    }
-
-    public Instant getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public Paiement createdAt(Instant createdAt) {
-        this.setCreatedAt(createdAt);
-        return this;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
     }
 
     public Reservation getReservation() {
@@ -119,7 +101,6 @@ public class Paiement implements Serializable {
         return "Paiement{" +
             "id=" + getId() +
             ", montant=" + getMontant() +
-            ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }
 }

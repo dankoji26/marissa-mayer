@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -49,7 +49,7 @@ export const CoursDetail = () => {
               <Translate contentKey="marissamayerApp.cours.duree">Duree</Translate>
             </span>
           </dt>
-          <dd>{coursEntity.duree} Heures</dd>
+          <dd>{coursEntity.duree}</dd>
           <dt>
             <span id="prerequis">
               <Translate contentKey="marissamayerApp.cours.prerequis">Prerequis</Translate>
@@ -57,15 +57,28 @@ export const CoursDetail = () => {
           </dt>
           <dd>{coursEntity.prerequis}</dd>
           <dt>
-            <span id="createdAt">
-              <Translate contentKey="marissamayerApp.cours.createdAt">Created At</Translate>
+            <span id="prix">
+              <Translate contentKey="marissamayerApp.cours.prix">Prix</Translate>
             </span>
           </dt>
-          <dd>{coursEntity.createdAt ? <TextFormat value={coursEntity.createdAt} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
+          <dd>{coursEntity.prix}</dd>
+          <dt>
+            <Translate contentKey="marissamayerApp.cours.categories">Categories</Translate>
+          </dt>
+          <dd>
+            {coursEntity.categories
+              ? coursEntity.categories.map((val, i) => (
+                  <span key={val.id}>
+                    <a>{val.id}</a>
+                    {coursEntity.categories && i === coursEntity.categories.length - 1 ? '' : ', '}
+                  </span>
+                ))
+              : null}
+          </dd>
           <dt>
             <Translate contentKey="marissamayerApp.cours.catalogue">Catalogue</Translate>
           </dt>
-          <dd>{coursEntity.catalogue ? coursEntity.catalogue.nom : ''}</dd>
+          <dd>{coursEntity.catalogue ? coursEntity.catalogue.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/cours" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

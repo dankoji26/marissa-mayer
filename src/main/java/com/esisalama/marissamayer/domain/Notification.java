@@ -41,7 +41,7 @@ public class Notification implements Serializable {
 
     @ManyToOne(optional = false)
     @NotNull
-    @JsonIgnoreProperties(value = { "reservations", "evaluations", "notifications", "creneaus" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "instance", "reservations", "evaluations", "creneaus" }, allowSetters = true)
     private Utilisateur utilisateur;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

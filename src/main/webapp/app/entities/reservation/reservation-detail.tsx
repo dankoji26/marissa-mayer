@@ -45,17 +45,13 @@ export const ReservationDetail = () => {
           </dt>
           <dd>{reservationEntity.date ? <TextFormat value={reservationEntity.date} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
           <dt>
-            <span id="createdAt">
-              <Translate contentKey="marissamayerApp.reservation.createdAt">Created At</Translate>
-            </span>
+            <Translate contentKey="marissamayerApp.reservation.user">User</Translate>
           </dt>
-          <dd>
-            {reservationEntity.createdAt ? <TextFormat value={reservationEntity.createdAt} type="date" format={APP_DATE_FORMAT} /> : null}
-          </dd>
+          <dd>{reservationEntity.user ? reservationEntity.user.id : ''}</dd>
           <dt>
-            <Translate contentKey="marissamayerApp.reservation.utilisateur">Utilisateur</Translate>
+            <Translate contentKey="marissamayerApp.reservation.cours">Cours</Translate>
           </dt>
-          <dd>{reservationEntity.utilisateur ? reservationEntity.utilisateur.email : ''}</dd>
+          <dd>{reservationEntity.cours ? reservationEntity.cours.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/reservation" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

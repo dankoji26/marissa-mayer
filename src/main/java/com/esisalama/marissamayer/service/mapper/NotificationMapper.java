@@ -17,6 +17,5 @@ public interface NotificationMapper extends EntityMapper<NotificationDTO, Notifi
     @Named("utilisateurId")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    @Mapping(target = "email", source = "email")
     UtilisateurDTO toDtoUtilisateurId(Utilisateur utilisateur);
 }

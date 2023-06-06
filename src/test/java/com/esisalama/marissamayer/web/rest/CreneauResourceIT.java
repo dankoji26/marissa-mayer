@@ -98,7 +98,7 @@ class CreneauResourceIT {
         } else {
             utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
         }
-        creneau.setUtilisateur(utilisateur);
+        creneau.setUser(utilisateur);
         return creneau;
     }
 
@@ -133,7 +133,7 @@ class CreneauResourceIT {
         } else {
             utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
         }
-        creneau.setUtilisateur(utilisateur);
+        creneau.setUser(utilisateur);
         return creneau;
     }
 

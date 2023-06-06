@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -54,9 +54,6 @@ export const Categorie = () => {
                 <th>
                   <Translate contentKey="marissamayerApp.categorie.nom">Nom</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="marissamayerApp.categorie.createdAt">Created At</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -69,7 +66,6 @@ export const Categorie = () => {
                     </Button>
                   </td>
                   <td>{categorie.nom}</td>
-                  <td>{categorie.createdAt ? <TextFormat type="date" value={categorie.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/categorie/${categorie.id}`} color="info" size="sm" data-cy="entityDetailsButton">

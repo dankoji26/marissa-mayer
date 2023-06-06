@@ -58,7 +58,7 @@ export const EvaluationUpdate = () => {
       ...evaluationEntity,
       ...values,
       cours: cours.find(it => it.id.toString() === values.cours.toString()),
-      utilisateur: utilisateurs.find(it => it.id.toString() === values.utilisateur.toString()),
+      user: utilisateurs.find(it => it.id.toString() === values.user.toString()),
     };
 
     if (isNew) {
@@ -77,7 +77,7 @@ export const EvaluationUpdate = () => {
           ...evaluationEntity,
           createdAt: convertDateTimeFromServer(evaluationEntity.createdAt),
           cours: evaluationEntity?.cours?.id,
-          utilisateur: evaluationEntity?.utilisateur?.id,
+          user: evaluationEntity?.user?.id,
         };
 
   return (
@@ -138,7 +138,7 @@ export const EvaluationUpdate = () => {
                 {cours
                   ? cours.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.nom}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}
@@ -147,10 +147,10 @@ export const EvaluationUpdate = () => {
                 <Translate contentKey="entity.validation.required">This field is required.</Translate>
               </FormText>
               <ValidatedField
-                id="evaluation-utilisateur"
-                name="utilisateur"
-                data-cy="utilisateur"
-                label={translate('marissamayerApp.evaluation.utilisateur')}
+                id="evaluation-user"
+                name="user"
+                data-cy="user"
+                label={translate('marissamayerApp.evaluation.user')}
                 type="select"
                 required
               >
@@ -158,7 +158,7 @@ export const EvaluationUpdate = () => {
                 {utilisateurs
                   ? utilisateurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.email}
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

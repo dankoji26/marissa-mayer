@@ -1,7 +1,6 @@
 package com.esisalama.marissamayer.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -16,10 +15,7 @@ public class CatalogueDTO implements Serializable {
     @NotNull
     private String nom;
 
-    @NotNull
-    private Instant createdAt;
-
-    private UtilisateurDTO utilisateur;
+    private UserDTO user;
 
     public Long getId() {
         return id;
@@ -37,20 +33,12 @@ public class CatalogueDTO implements Serializable {
         this.nom = nom;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
+    public UserDTO getUser() {
+        return user;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public UtilisateurDTO getUtilisateur() {
-        return utilisateur;
-    }
-
-    public void setUtilisateur(UtilisateurDTO utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setUser(UserDTO user) {
+        this.user = user;
     }
 
     @Override
@@ -80,8 +68,7 @@ public class CatalogueDTO implements Serializable {
         return "CatalogueDTO{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", utilisateur=" + getUtilisateur() +
+            ", user=" + getUser() +
             "}";
     }
 }

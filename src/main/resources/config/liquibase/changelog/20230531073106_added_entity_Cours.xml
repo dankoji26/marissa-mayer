@@ -26,15 +26,28 @@
             <column name="prerequis" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="created_at" type="${datetimeType}">
-                <constraints nullable="false" />
+            <column name="prix" type="bigint">
+                <constraints nullable="true" />
             </column>
             <column name="catalogue_id" type="bigint">
                 <constraints nullable="false" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="cours" columnName="created_at" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <changeSet id="20230531073106-1-relations" author="jhipster">
+
+        <createTable tableName="rel_cours__categories">
+            <column name="categories_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cours_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="cours_id, categories_id" tableName="rel_cours__categories"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -58,7 +71,7 @@
             <column name="description" type="string"/>
             <column name="duree" type="numeric"/>
             <column name="prerequis" type="string"/>
-            <column name="created_at" type="date"/>
+            <column name="prix" type="numeric"/>
             <column name="catalogue_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

@@ -2,7 +2,6 @@ package com.esisalama.marissamayer.service.dto;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -16,9 +15,6 @@ public class PaiementDTO implements Serializable {
 
     @NotNull
     private BigDecimal montant;
-
-    @NotNull
-    private Instant createdAt;
 
     private ReservationDTO reservation;
 
@@ -36,14 +32,6 @@ public class PaiementDTO implements Serializable {
 
     public void setMontant(BigDecimal montant) {
         this.montant = montant;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
     }
 
     public ReservationDTO getReservation() {
@@ -81,7 +69,6 @@ public class PaiementDTO implements Serializable {
         return "PaiementDTO{" +
             "id=" + getId() +
             ", montant=" + getMontant() +
-            ", createdAt='" + getCreatedAt() + "'" +
             ", reservation=" + getReservation() +
             "}";
     }

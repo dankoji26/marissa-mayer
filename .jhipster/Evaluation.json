@@ -32,7 +32,7 @@
     {
       "otherEntityName": "utilisateur",
       "otherEntityRelationshipName": "evaluation",
-      "relationshipName": "utilisateur",
+      "relationshipName": "user",
       "relationshipType": "many-to-one",
       "relationshipValidateRules": "required"
     }

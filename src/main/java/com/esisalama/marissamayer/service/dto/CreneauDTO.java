@@ -27,7 +27,7 @@ public class CreneauDTO implements Serializable {
 
     private CoursDTO cours;
 
-    private UtilisateurDTO utilisateur;
+    private UtilisateurDTO user;
 
     public Long getId() {
         return id;
@@ -77,12 +77,12 @@ public class CreneauDTO implements Serializable {
         this.cours = cours;
     }
 
-    public UtilisateurDTO getUtilisateur() {
-        return utilisateur;
+    public UtilisateurDTO getUser() {
+        return user;
     }
 
-    public void setUtilisateur(UtilisateurDTO utilisateur) {
-        this.utilisateur = utilisateur;
+    public void setUser(UtilisateurDTO user) {
+        this.user = user;
     }
 
     @Override
@@ -116,7 +116,7 @@ public class CreneauDTO implements Serializable {
             ", heureFin='" + getHeureFin() + "'" +
             ", statuts='" + getStatuts() + "'" +
             ", cours=" + getCours() +
-            ", utilisateur=" + getUtilisateur() +
+            ", user=" + getUser() +
             "}";
     }
 }

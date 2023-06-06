@@ -11,23 +11,16 @@ application {
   dto * with mapstruct
 }
 entity Utilisateur {
-	nom String required,
-    prenom String required,
-    email String required,
-    password String required,
-    createdAt Instant required,
-    role Role required
+
 }
 
 entity Reservation {
 	statuts ReservationStatuts required,
     date Instant required,
-    createdAt Instant required
 }
 
 entity Categorie {
 	nom String required,
-    createdAt Instant required
 }
 
 entity Cours {
@@ -35,23 +28,15 @@ entity Cours {
     description String required,
     duree Integer,
     prerequis String,
-    createdAt Instant required
+    prix Long
 }
 
 entity Paiement {
     montant BigDecimal required,
-    createdAt Instant required
 }
 
 entity Catalogue {
     nom String required,
-    createdAt Instant required
-}
-
-entity Notification {
-    message String required,
-    statuts NotificationStatus required,
-    createdAt Instant required,
 }
 
 entity Evaluation {
@@ -70,14 +55,6 @@ enum ReservationStatuts {
     REJETEE, EN_ATTENTE, CONFIRMEE
 }
 
-enum NotificationStatus {
-	LUE, NON_LUE
-}
-
-enum Role {
-	PRESTATAIRE, ETUDIANT
-}
-
 enum Jour {
 	LUNDI, MARDI, MERCREDI, JEUDI, VENDREDI, SAMEDI, DIMANCHE
 }
@@ -87,7 +64,7 @@ enum CreneauStatuts {
 }
 
 relationship OneToOne {
-	Catalogue{utilisateur required} to Utilisateur
+	Catalogue{user required} to User
 }
 
 relationship OneToMany {
@@ -98,8 +75,12 @@ relationship OneToOne {
 	Paiement{reservation required} to Reservation
 }
 
+relationship OneToOne {
+    Utilisateur{instance required} to User
+}
+
 relationship OneToMany {
-	Utilisateur to Reservation{utilisateur required}
+	Utilisateur to Reservation{user required}
 }
 
 relationship OneToMany {
@@ -107,11 +88,7 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-	Utilisateur to Evaluation{utilisateur required}
-}
-
-relationship OneToMany {
-	Utilisateur to Notification{utilisateur required}
+	Utilisateur to Evaluation{user required}
 }
 
 relationship OneToMany {
@@ -119,9 +96,15 @@ relationship OneToMany {
 }
 
 relationship OneToMany {
-	Utilisateur to Creneau{utilisateur required}
+	Utilisateur to Creneau{user required}
+}
+
+relationship ManyToMany {
+    Cours{categories} to Categorie{cours required}
 }
 
 relationship OneToMany {
-	Utilisateur to Creneau{utilisateur required}
+    Cours to Reservation{cours required}
 }
+
+// si j'annule une reservation, pour etre en mesure de rembourser un paiement je dois lier Reservation a Paiement

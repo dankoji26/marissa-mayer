@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -55,9 +55,6 @@ export const Paiement = () => {
                   <Translate contentKey="marissamayerApp.paiement.montant">Montant</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="marissamayerApp.paiement.createdAt">Created At</Translate>
-                </th>
-                <th>
                   <Translate contentKey="marissamayerApp.paiement.reservation">Reservation</Translate>
                 </th>
                 <th />
@@ -72,7 +69,6 @@ export const Paiement = () => {
                     </Button>
                   </td>
                   <td>{paiement.montant}</td>
-                  <td>{paiement.createdAt ? <TextFormat type="date" value={paiement.createdAt} format={APP_DATE_FORMAT} /> : null}</td>
                   <td>
                     {paiement.reservation ? <Link to={`/reservation/${paiement.reservation.id}`}>{paiement.reservation.id}</Link> : ''}
                   </td>

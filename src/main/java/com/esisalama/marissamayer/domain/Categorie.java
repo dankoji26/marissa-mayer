@@ -1,7 +1,9 @@
 package com.esisalama.marissamayer.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
@@ -28,9 +30,10 @@ public class Categorie implements Serializable {
     @Column(name = "nom", nullable = false)
     private String nom;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    @ManyToMany(mappedBy = "categories")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "evaluations", "creneaus", "reservations", "categories", "catalogue" }, allowSetters = true)
+    private Set<Cours> cours = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -60,17 +63,35 @@ public class Categorie implements Serializable {
         this.nom = nom;
     }
 
-    public Instant getCreatedAt() {
-        return this.createdAt;
+    public Set<Cours> getCours() {
+        return this.cours;
     }
 
-    public Categorie createdAt(Instant createdAt) {
-        this.setCreatedAt(createdAt);
+    public void setCours(Set<Cours> cours) {
+        if (this.cours != null) {
+            this.cours.forEach(i -> i.removeCategories(this));
+        }
+        if (cours != null) {
+            cours.forEach(i -> i.addCategories(this));
+        }
+        this.cours = cours;
+    }
+
+    public Categorie cours(Set<Cours> cours) {
+        this.setCours(cours);
         return this;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
+    public Categorie addCours(Cours cours) {
+        this.cours.add(cours);
+        cours.getCategories().add(this);
+        return this;
+    }
+
+    public Categorie removeCours(Cours cours) {
+        this.cours.remove(cours);
+        cours.getCategories().remove(this);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -98,7 +119,6 @@ public class Categorie implements Serializable {
         return "Categorie{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }
 }

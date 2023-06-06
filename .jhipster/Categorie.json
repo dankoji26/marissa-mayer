@@ -9,11 +9,6 @@
       "fieldName": "nom",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "createdAt",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,
@@ -21,6 +16,15 @@
   "name": "Categorie",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityName": "cours",
+      "otherEntityRelationshipName": "categories",
+      "ownerSide": false,
+      "relationshipName": "cours",
+      "relationshipType": "many-to-many",
+      "relationshipValidateRules": "required"
+    }
+  ],
   "service": "serviceClass"
 }

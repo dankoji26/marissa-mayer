@@ -2,7 +2,6 @@ package com.esisalama.marissamayer.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
@@ -31,19 +30,14 @@ public class Catalogue implements Serializable {
     @Column(name = "nom", nullable = false)
     private String nom;
 
-    @NotNull
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
-
-    @JsonIgnoreProperties(value = { "reservations", "evaluations", "notifications", "creneaus" }, allowSetters = true)
     @OneToOne(optional = false)
     @NotNull
     @JoinColumn(unique = true)
-    private Utilisateur utilisateur;
+    private User user;
 
     @OneToMany(mappedBy = "catalogue")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "evaluations", "creneaus", "catalogue" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "evaluations", "creneaus", "reservations", "categories", "catalogue" }, allowSetters = true)
     private Set<Cours> cours = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -74,29 +68,16 @@ public class Catalogue implements Serializable {
         this.nom = nom;
     }
 
-    public Instant getCreatedAt() {
-        return this.createdAt;
+    public User getUser() {
+        return this.user;
     }
 
-    public Catalogue createdAt(Instant createdAt) {
-        this.setCreatedAt(createdAt);
-        return this;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Utilisateur getUtilisateur() {
-        return this.utilisateur;
-    }
-
-    public void setUtilisateur(Utilisateur utilisateur) {
-        this.utilisateur = utilisateur;
-    }
-
-    public Catalogue utilisateur(Utilisateur utilisateur) {
-        this.setUtilisateur(utilisateur);
+    public Catalogue user(User user) {
+        this.setUser(user);
         return this;
     }
 
@@ -156,7 +137,6 @@ public class Catalogue implements Serializable {
         return "Catalogue{" +
             "id=" + getId() +
             ", nom='" + getNom() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
             "}";
     }
 }

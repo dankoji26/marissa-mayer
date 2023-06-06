@@ -10,6 +10,8 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IUtilisateur } from 'app/shared/model/utilisateur.model';
 import { getEntities as getUtilisateurs } from 'app/entities/utilisateur/utilisateur.reducer';
+import { ICours } from 'app/shared/model/cours.model';
+import { getEntities as getCours } from 'app/entities/cours/cours.reducer';
 import { IReservation } from 'app/shared/model/reservation.model';
 import { ReservationStatuts } from 'app/shared/model/enumerations/reservation-statuts.model';
 import { getEntity, updateEntity, createEntity, reset } from './reservation.reducer';
@@ -23,6 +25,7 @@ export const ReservationUpdate = () => {
   const isNew = id === undefined;
 
   const utilisateurs = useAppSelector(state => state.utilisateur.entities);
+  const cours = useAppSelector(state => state.cours.entities);
   const reservationEntity = useAppSelector(state => state.reservation.entity);
   const loading = useAppSelector(state => state.reservation.loading);
   const updating = useAppSelector(state => state.reservation.updating);
@@ -41,6 +44,7 @@ export const ReservationUpdate = () => {
     }
 
     dispatch(getUtilisateurs({}));
+    dispatch(getCours({}));
   }, []);
 
   useEffect(() => {
@@ -51,12 +55,12 @@ export const ReservationUpdate = () => {
 
   const saveEntity = values => {
     values.date = convertDateTimeToServer(values.date);
-    values.createdAt = convertDateTimeToServer(values.createdAt);
 
     const entity = {
       ...reservationEntity,
       ...values,
-      utilisateur: utilisateurs.find(it => it.id.toString() === values.utilisateur.toString()),
+      user: utilisateurs.find(it => it.id.toString() === values.user.toString()),
+      cours: cours.find(it => it.id.toString() === values.cours.toString()),
     };
 
     if (isNew) {
@@ -70,14 +74,13 @@ export const ReservationUpdate = () => {
     isNew
       ? {
           date: displayDefaultDateTime(),
-          createdAt: displayDefaultDateTime(),
         }
       : {
           statuts: 'REJETEE',
           ...reservationEntity,
           date: convertDateTimeFromServer(reservationEntity.date),
-          createdAt: convertDateTimeFromServer(reservationEntity.createdAt),
-          utilisateur: reservationEntity?.utilisateur?.id,
+          user: reservationEntity?.user?.id,
+          cours: reservationEntity?.cours?.id,
         };
 
   return (
@@ -130,21 +133,10 @@ export const ReservationUpdate = () => {
                 }}
               />
               <ValidatedField
-                label={translate('marissamayerApp.reservation.createdAt')}
-                id="reservation-createdAt"
-                name="createdAt"
-                data-cy="createdAt"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                id="reservation-utilisateur"
-                name="utilisateur"
-                data-cy="utilisateur"
-                label={translate('marissamayerApp.reservation.utilisateur')}
+                id="reservation-user"
+                name="user"
+                data-cy="user"
+                label={translate('marissamayerApp.reservation.user')}
                 type="select"
                 required
               >
@@ -152,7 +144,27 @@ export const ReservationUpdate = () => {
                 {utilisateurs
                   ? utilisateurs.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.email}
+                        {otherEntity.id}
+                      </option>
+                    ))
+                  : null}
+              </ValidatedField>
+              <FormText>
+                <Translate contentKey="entity.validation.required">This field is required.</Translate>
+              </FormText>
+              <ValidatedField
+                id="reservation-cours"
+                name="cours"
+                data-cy="cours"
+                label={translate('marissamayerApp.reservation.cours')}
+                type="select"
+                required
+              >
+                <option value="" key="0" />
+                {cours
+                  ? cours.map(otherEntity => (
+                      <option value={otherEntity.id} key={otherEntity.id}>
+                        {otherEntity.id}
                       </option>
                     ))
                   : null}

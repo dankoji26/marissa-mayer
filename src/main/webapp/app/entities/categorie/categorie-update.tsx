@@ -8,6 +8,8 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
+import { ICours } from 'app/shared/model/cours.model';
+import { getEntities as getCours } from 'app/entities/cours/cours.reducer';
 import { ICategorie } from 'app/shared/model/categorie.model';
 import { getEntity, updateEntity, createEntity, reset } from './categorie.reducer';
 
@@ -19,6 +21,7 @@ export const CategorieUpdate = () => {
   const { id } = useParams<'id'>();
   const isNew = id === undefined;
 
+  const cours = useAppSelector(state => state.cours.entities);
   const categorieEntity = useAppSelector(state => state.categorie.entity);
   const loading = useAppSelector(state => state.categorie.loading);
   const updating = useAppSelector(state => state.categorie.updating);
@@ -34,6 +37,8 @@ export const CategorieUpdate = () => {
     } else {
       dispatch(getEntity(id));
     }
+
+    dispatch(getCours({}));
   }, []);
 
   useEffect(() => {
@@ -43,8 +48,6 @@ export const CategorieUpdate = () => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.createdAt = convertDateTimeToServer(values.createdAt);
-
     const entity = {
       ...categorieEntity,
       ...values,
@@ -59,12 +62,9 @@ export const CategorieUpdate = () => {
 
   const defaultValues = () =>
     isNew
-      ? {
-          createdAt: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...categorieEntity,
-          createdAt: convertDateTimeFromServer(categorieEntity.createdAt),
         };
 
   return (
@@ -98,17 +98,6 @@ export const CategorieUpdate = () => {
                 name="nom"
                 data-cy="nom"
                 type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                }}
-              />
-              <ValidatedField
-                label={translate('marissamayerApp.categorie.createdAt')}
-                id="categorie-createdAt"
-                name="createdAt"
-                data-cy="createdAt"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
                 }}

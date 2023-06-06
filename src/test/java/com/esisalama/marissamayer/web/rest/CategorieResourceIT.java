@@ -7,11 +7,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.esisalama.marissamayer.IntegrationTest;
 import com.esisalama.marissamayer.domain.Categorie;
+import com.esisalama.marissamayer.domain.Cours;
 import com.esisalama.marissamayer.repository.CategorieRepository;
 import com.esisalama.marissamayer.service.dto.CategorieDTO;
 import com.esisalama.marissamayer.service.mapper.CategorieMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -35,9 +34,6 @@ class CategorieResourceIT {
 
     private static final String DEFAULT_NOM = "AAAAAAAAAA";
     private static final String UPDATED_NOM = "BBBBBBBBBB";
-
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String ENTITY_API_URL = "/api/categories";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -66,7 +62,17 @@ class CategorieResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Categorie createEntity(EntityManager em) {
-        Categorie categorie = new Categorie().nom(DEFAULT_NOM).createdAt(DEFAULT_CREATED_AT);
+        Categorie categorie = new Categorie().nom(DEFAULT_NOM);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        categorie.getCours().add(cours);
         return categorie;
     }
 
@@ -77,7 +83,17 @@ class CategorieResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Categorie createUpdatedEntity(EntityManager em) {
-        Categorie categorie = new Categorie().nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        Categorie categorie = new Categorie().nom(UPDATED_NOM);
+        // Add required entity
+        Cours cours;
+        if (TestUtil.findAll(em, Cours.class).isEmpty()) {
+            cours = CoursResourceIT.createUpdatedEntity(em);
+            em.persist(cours);
+            em.flush();
+        } else {
+            cours = TestUtil.findAll(em, Cours.class).get(0);
+        }
+        categorie.getCours().add(cours);
         return categorie;
     }
 
@@ -101,7 +117,6 @@ class CategorieResourceIT {
         assertThat(categorieList).hasSize(databaseSizeBeforeCreate + 1);
         Categorie testCategorie = categorieList.get(categorieList.size() - 1);
         assertThat(testCategorie.getNom()).isEqualTo(DEFAULT_NOM);
-        assertThat(testCategorie.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
     }
 
     @Test
@@ -143,24 +158,6 @@ class CategorieResourceIT {
 
     @Test
     @Transactional
-    void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = categorieRepository.findAll().size();
-        // set the field null
-        categorie.setCreatedAt(null);
-
-        // Create the Categorie, which fails.
-        CategorieDTO categorieDTO = categorieMapper.toDto(categorie);
-
-        restCategorieMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(categorieDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Categorie> categorieList = categorieRepository.findAll();
-        assertThat(categorieList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllCategories() throws Exception {
         // Initialize the database
         categorieRepository.saveAndFlush(categorie);
@@ -171,8 +168,7 @@ class CategorieResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(categorie.getId().intValue())))
-            .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].nom").value(hasItem(DEFAULT_NOM)));
     }
 
     @Test
@@ -187,8 +183,7 @@ class CategorieResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(categorie.getId().intValue()))
-            .andExpect(jsonPath("$.nom").value(DEFAULT_NOM))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.nom").value(DEFAULT_NOM));
     }
 
     @Test
@@ -210,7 +205,7 @@ class CategorieResourceIT {
         Categorie updatedCategorie = categorieRepository.findById(categorie.getId()).get();
         // Disconnect from session so that the updates on updatedCategorie are not directly saved in db
         em.detach(updatedCategorie);
-        updatedCategorie.nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        updatedCategorie.nom(UPDATED_NOM);
         CategorieDTO categorieDTO = categorieMapper.toDto(updatedCategorie);
 
         restCategorieMockMvc
@@ -226,7 +221,6 @@ class CategorieResourceIT {
         assertThat(categorieList).hasSize(databaseSizeBeforeUpdate);
         Categorie testCategorie = categorieList.get(categorieList.size() - 1);
         assertThat(testCategorie.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCategorie.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test
@@ -306,7 +300,7 @@ class CategorieResourceIT {
         Categorie partialUpdatedCategorie = new Categorie();
         partialUpdatedCategorie.setId(categorie.getId());
 
-        partialUpdatedCategorie.nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        partialUpdatedCategorie.nom(UPDATED_NOM);
 
         restCategorieMockMvc
             .perform(
@@ -321,7 +315,6 @@ class CategorieResourceIT {
         assertThat(categorieList).hasSize(databaseSizeBeforeUpdate);
         Categorie testCategorie = categorieList.get(categorieList.size() - 1);
         assertThat(testCategorie.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCategorie.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test
@@ -336,7 +329,7 @@ class CategorieResourceIT {
         Categorie partialUpdatedCategorie = new Categorie();
         partialUpdatedCategorie.setId(categorie.getId());
 
-        partialUpdatedCategorie.nom(UPDATED_NOM).createdAt(UPDATED_CREATED_AT);
+        partialUpdatedCategorie.nom(UPDATED_NOM);
 
         restCategorieMockMvc
             .perform(
@@ -351,7 +344,6 @@ class CategorieResourceIT {
         assertThat(categorieList).hasSize(databaseSizeBeforeUpdate);
         Categorie testCategorie = categorieList.get(categorieList.size() - 1);
         assertThat(testCategorie.getNom()).isEqualTo(UPDATED_NOM);
-        assertThat(testCategorie.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
     }
 
     @Test

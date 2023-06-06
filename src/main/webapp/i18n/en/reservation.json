@@ -20,8 +20,8 @@
       "id": "ID",
       "statuts": "Statuts",
       "date": "Date",
-      "createdAt": "Created At",
-      "utilisateur": "Utilisateur"
+      "user": "User",
+      "cours": "Cours"
     }
   }
 }

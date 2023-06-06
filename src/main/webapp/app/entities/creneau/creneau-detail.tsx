@@ -59,11 +59,11 @@ export const CreneauDetail = () => {
           <dt>
             <Translate contentKey="marissamayerApp.creneau.cours">Cours</Translate>
           </dt>
-          <dd>{creneauEntity.cours ? creneauEntity.cours.nom : ''}</dd>
+          <dd>{creneauEntity.cours ? creneauEntity.cours.id : ''}</dd>
           <dt>
-            <Translate contentKey="marissamayerApp.creneau.utilisateur">Utilisateur</Translate>
+            <Translate contentKey="marissamayerApp.creneau.user">User</Translate>
           </dt>
-          <dd>{creneauEntity.utilisateur ? creneauEntity.utilisateur.email : ''}</dd>
+          <dd>{creneauEntity.user ? creneauEntity.user.id : ''}</dd>
         </dl>
         <Button tag={Link} to="/creneau" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

@@ -24,9 +24,8 @@
       "fieldType": "String"
     },
     {
-      "fieldName": "createdAt",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
+      "fieldName": "prix",
+      "fieldType": "Long"
     }
   ],
   "fluentMethods": true,
@@ -46,6 +45,19 @@
       "otherEntityRelationshipName": "cours",
       "relationshipName": "creneau",
       "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "reservation",
+      "otherEntityRelationshipName": "cours",
+      "relationshipName": "reservation",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "categorie",
+      "otherEntityRelationshipName": "cours",
+      "ownerSide": true,
+      "relationshipName": "categories",
+      "relationshipType": "many-to-many"
     },
     {
       "otherEntityName": "catalogue",

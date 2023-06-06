@@ -22,9 +22,11 @@
       "description": "Description",
       "duree": "Duree",
       "prerequis": "Prerequis",
-      "createdAt": "Created At",
+      "prix": "Prix",
       "evaluation": "Evaluation",
       "creneau": "Creneau",
+      "reservation": "Reservation",
+      "categories": "Categories",
       "catalogue": "Catalogue"
     }
   }

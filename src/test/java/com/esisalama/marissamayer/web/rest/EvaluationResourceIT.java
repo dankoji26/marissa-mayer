@@ -88,7 +88,7 @@ class EvaluationResourceIT {
         } else {
             utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
         }
-        evaluation.setUtilisateur(utilisateur);
+        evaluation.setUser(utilisateur);
         return evaluation;
     }
 
@@ -119,7 +119,7 @@ class EvaluationResourceIT {
         } else {
             utilisateur = TestUtil.findAll(em, Utilisateur.class).get(0);
         }
-        evaluation.setUtilisateur(utilisateur);
+        evaluation.setUser(utilisateur);
         return evaluation;
     }
 

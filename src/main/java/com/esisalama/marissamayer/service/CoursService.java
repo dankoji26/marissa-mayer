@@ -10,6 +10,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -89,6 +91,15 @@ public class CoursService {
     }
 
     /**
+     * Get all the cours with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<CoursDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return coursRepository.findAllWithEagerRelationships(pageable).map(coursMapper::toDto);
+    }
+
+    /**
      * Get one cours by id.
      *
      * @param id the id of the entity.
@@ -97,7 +108,7 @@ public class CoursService {
     @Transactional(readOnly = true)
     public Optional<CoursDTO> findOne(Long id) {
         log.debug("Request to get Cours : {}", id);
-        return coursRepository.findById(id).map(coursMapper::toDto);
+        return coursRepository.findOneWithEagerRelationships(id).map(coursMapper::toDto);
     }
 
     /**

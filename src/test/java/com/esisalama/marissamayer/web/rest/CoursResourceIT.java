@@ -2,6 +2,7 @@ package com.esisalama.marissamayer.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -9,18 +10,24 @@ import com.esisalama.marissamayer.IntegrationTest;
 import com.esisalama.marissamayer.domain.Catalogue;
 import com.esisalama.marissamayer.domain.Cours;
 import com.esisalama.marissamayer.repository.CoursRepository;
+import com.esisalama.marissamayer.service.CoursService;
 import com.esisalama.marissamayer.service.dto.CoursDTO;
 import com.esisalama.marissamayer.service.mapper.CoursMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -30,6 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link CoursResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class CoursResourceIT {
@@ -46,8 +54,8 @@ class CoursResourceIT {
     private static final String DEFAULT_PREREQUIS = "AAAAAAAAAA";
     private static final String UPDATED_PREREQUIS = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_CREATED_AT = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CREATED_AT = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Long DEFAULT_PRIX = 1L;
+    private static final Long UPDATED_PRIX = 2L;
 
     private static final String ENTITY_API_URL = "/api/cours";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -58,8 +66,14 @@ class CoursResourceIT {
     @Autowired
     private CoursRepository coursRepository;
 
+    @Mock
+    private CoursRepository coursRepositoryMock;
+
     @Autowired
     private CoursMapper coursMapper;
+
+    @Mock
+    private CoursService coursServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -81,7 +95,7 @@ class CoursResourceIT {
             .description(DEFAULT_DESCRIPTION)
             .duree(DEFAULT_DUREE)
             .prerequis(DEFAULT_PREREQUIS)
-            .createdAt(DEFAULT_CREATED_AT);
+            .prix(DEFAULT_PRIX);
         // Add required entity
         Catalogue catalogue;
         if (TestUtil.findAll(em, Catalogue.class).isEmpty()) {
@@ -107,7 +121,7 @@ class CoursResourceIT {
             .description(UPDATED_DESCRIPTION)
             .duree(UPDATED_DUREE)
             .prerequis(UPDATED_PREREQUIS)
-            .createdAt(UPDATED_CREATED_AT);
+            .prix(UPDATED_PRIX);
         // Add required entity
         Catalogue catalogue;
         if (TestUtil.findAll(em, Catalogue.class).isEmpty()) {
@@ -144,7 +158,7 @@ class CoursResourceIT {
         assertThat(testCours.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testCours.getDuree()).isEqualTo(DEFAULT_DUREE);
         assertThat(testCours.getPrerequis()).isEqualTo(DEFAULT_PREREQUIS);
-        assertThat(testCours.getCreatedAt()).isEqualTo(DEFAULT_CREATED_AT);
+        assertThat(testCours.getPrix()).isEqualTo(DEFAULT_PRIX);
     }
 
     @Test
@@ -204,24 +218,6 @@ class CoursResourceIT {
 
     @Test
     @Transactional
-    void checkCreatedAtIsRequired() throws Exception {
-        int databaseSizeBeforeTest = coursRepository.findAll().size();
-        // set the field null
-        cours.setCreatedAt(null);
-
-        // Create the Cours, which fails.
-        CoursDTO coursDTO = coursMapper.toDto(cours);
-
-        restCoursMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(coursDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Cours> coursList = coursRepository.findAll();
-        assertThat(coursList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllCours() throws Exception {
         // Initialize the database
         coursRepository.saveAndFlush(cours);
@@ -236,7 +232,24 @@ class CoursResourceIT {
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].duree").value(hasItem(DEFAULT_DUREE)))
             .andExpect(jsonPath("$.[*].prerequis").value(hasItem(DEFAULT_PREREQUIS)))
-            .andExpect(jsonPath("$.[*].createdAt").value(hasItem(DEFAULT_CREATED_AT.toString())));
+            .andExpect(jsonPath("$.[*].prix").value(hasItem(DEFAULT_PRIX.intValue())));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCoursWithEagerRelationshipsIsEnabled() throws Exception {
+        when(coursServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCoursMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(coursServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllCoursWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(coursServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restCoursMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(coursRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -255,7 +268,7 @@ class CoursResourceIT {
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
             .andExpect(jsonPath("$.duree").value(DEFAULT_DUREE))
             .andExpect(jsonPath("$.prerequis").value(DEFAULT_PREREQUIS))
-            .andExpect(jsonPath("$.createdAt").value(DEFAULT_CREATED_AT.toString()));
+            .andExpect(jsonPath("$.prix").value(DEFAULT_PRIX.intValue()));
     }
 
     @Test
@@ -277,12 +290,7 @@ class CoursResourceIT {
         Cours updatedCours = coursRepository.findById(cours.getId()).get();
         // Disconnect from session so that the updates on updatedCours are not directly saved in db
         em.detach(updatedCours);
-        updatedCours
-            .nom(UPDATED_NOM)
-            .description(UPDATED_DESCRIPTION)
-            .duree(UPDATED_DUREE)
-            .prerequis(UPDATED_PREREQUIS)
-            .createdAt(UPDATED_CREATED_AT);
+        updatedCours.nom(UPDATED_NOM).description(UPDATED_DESCRIPTION).duree(UPDATED_DUREE).prerequis(UPDATED_PREREQUIS).prix(UPDATED_PRIX);
         CoursDTO coursDTO = coursMapper.toDto(updatedCours);
 
         restCoursMockMvc
@@ -301,7 +309,7 @@ class CoursResourceIT {
         assertThat(testCours.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testCours.getDuree()).isEqualTo(UPDATED_DUREE);
         assertThat(testCours.getPrerequis()).isEqualTo(UPDATED_PREREQUIS);
-        assertThat(testCours.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testCours.getPrix()).isEqualTo(UPDATED_PRIX);
     }
 
     @Test
@@ -381,7 +389,7 @@ class CoursResourceIT {
         Cours partialUpdatedCours = new Cours();
         partialUpdatedCours.setId(cours.getId());
 
-        partialUpdatedCours.prerequis(UPDATED_PREREQUIS).createdAt(UPDATED_CREATED_AT);
+        partialUpdatedCours.prerequis(UPDATED_PREREQUIS).prix(UPDATED_PRIX);
 
         restCoursMockMvc
             .perform(
@@ -399,7 +407,7 @@ class CoursResourceIT {
         assertThat(testCours.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testCours.getDuree()).isEqualTo(DEFAULT_DUREE);
         assertThat(testCours.getPrerequis()).isEqualTo(UPDATED_PREREQUIS);
-        assertThat(testCours.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testCours.getPrix()).isEqualTo(UPDATED_PRIX);
     }
 
     @Test
@@ -419,7 +427,7 @@ class CoursResourceIT {
             .description(UPDATED_DESCRIPTION)
             .duree(UPDATED_DUREE)
             .prerequis(UPDATED_PREREQUIS)
-            .createdAt(UPDATED_CREATED_AT);
+            .prix(UPDATED_PRIX);
 
         restCoursMockMvc
             .perform(
@@ -437,7 +445,7 @@ class CoursResourceIT {
         assertThat(testCours.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testCours.getDuree()).isEqualTo(UPDATED_DUREE);
         assertThat(testCours.getPrerequis()).isEqualTo(UPDATED_PREREQUIS);
-        assertThat(testCours.getCreatedAt()).isEqualTo(UPDATED_CREATED_AT);
+        assertThat(testCours.getPrix()).isEqualTo(UPDATED_PRIX);
     }
 
     @Test

@@ -17,15 +17,11 @@
             <column name="nom" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
-            <column name="created_at" type="${datetimeType}">
-                <constraints nullable="false" />
-            </column>
-            <column name="utilisateur_id" type="bigint">
-                <constraints nullable="false" unique="true" uniqueConstraintName="ux_catalogue__utilisateur_id" />
+            <column name="user_id" type="bigint">
+                <constraints nullable="false" unique="true" uniqueConstraintName="ux_catalogue__user_id" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="catalogue" columnName="created_at" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -46,8 +42,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="nom" type="string"/>
-            <column name="created_at" type="date"/>
-            <column name="utilisateur_id" type="numeric"/>
+            <column name="user_id" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

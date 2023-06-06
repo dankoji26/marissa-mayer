@@ -9,11 +9,6 @@
       "fieldName": "montant",
       "fieldType": "BigDecimal",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "createdAt",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
     }
   ],
   "fluentMethods": true,

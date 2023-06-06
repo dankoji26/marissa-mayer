@@ -4,39 +4,7 @@
   "dto": "mapstruct",
   "embedded": false,
   "entityTableName": "utilisateur",
-  "fields": [
-    {
-      "fieldName": "nom",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "prenom",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "email",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "password",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "createdAt",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "role",
-      "fieldType": "Role",
-      "fieldValidateRules": ["required"],
-      "fieldValues": "PRESTATAIRE,ETUDIANT"
-    }
-  ],
+  "fields": [],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Utilisateur",
@@ -44,26 +12,27 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityName": "user",
+      "ownerSide": true,
+      "relationshipName": "instance",
+      "relationshipType": "one-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
       "otherEntityName": "reservation",
-      "otherEntityRelationshipName": "utilisateur",
+      "otherEntityRelationshipName": "user",
       "relationshipName": "reservation",
       "relationshipType": "one-to-many"
     },
     {
       "otherEntityName": "evaluation",
-      "otherEntityRelationshipName": "utilisateur",
+      "otherEntityRelationshipName": "user",
       "relationshipName": "evaluation",
       "relationshipType": "one-to-many"
     },
     {
-      "otherEntityName": "notification",
-      "otherEntityRelationshipName": "utilisateur",
-      "relationshipName": "notification",
-      "relationshipType": "one-to-many"
-    },
-    {
       "otherEntityName": "creneau",
-      "otherEntityRelationshipName": "utilisateur",
+      "otherEntityRelationshipName": "user",
       "relationshipName": "creneau",
       "relationshipType": "one-to-many"
     }

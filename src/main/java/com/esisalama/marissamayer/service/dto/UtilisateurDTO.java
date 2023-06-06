@@ -1,8 +1,6 @@
 package com.esisalama.marissamayer.service.dto;
 
-import com.esisalama.marissamayer.domain.enumeration.Role;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -14,23 +12,7 @@ public class UtilisateurDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
-    private String nom;
-
-    @NotNull
-    private String prenom;
-
-    @NotNull
-    private String email;
-
-    @NotNull
-    private String password;
-
-    @NotNull
-    private Instant createdAt;
-
-    @NotNull
-    private Role role;
+    private UserDTO instance;
 
     public Long getId() {
         return id;
@@ -40,52 +22,12 @@ public class UtilisateurDTO implements Serializable {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public UserDTO getInstance() {
+        return instance;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getPrenom() {
-        return prenom;
-    }
-
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Instant createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
+    public void setInstance(UserDTO instance) {
+        this.instance = instance;
     }
 
     @Override
@@ -114,12 +56,7 @@ public class UtilisateurDTO implements Serializable {
     public String toString() {
         return "UtilisateurDTO{" +
             "id=" + getId() +
-            ", nom='" + getNom() + "'" +
-            ", prenom='" + getPrenom() + "'" +
-            ", email='" + getEmail() + "'" +
-            ", password='" + getPassword() + "'" +
-            ", createdAt='" + getCreatedAt() + "'" +
-            ", role='" + getRole() + "'" +
+            ", instance=" + getInstance() +
             "}";
     }
 }
